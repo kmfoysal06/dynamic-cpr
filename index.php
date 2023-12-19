@@ -1,2 +1,2 @@
 <?php 
-// require_once plugin_dir_path(__FILE__)."store-locator.php";
+require_once plugin_dir_path(__FILE__)."cpr.php";

@@ -14,54 +14,64 @@ if(class_exists('CSF')){
   CSF::createSection( $meta_prefix, [
     'fields' => [
       [
-        'id'      => 'post_type',
+        'id'      => 'type',
         'type'    => 'select',
-        'title'   => 'Post Type',
+        'title'   => 'Type',
         'options' => [
           'post'  => 'Post',
           'texonomy' => 'Texonomy',
         ],
      ],
      [
-      'id'=> 'maps',
+      'id'=> 'post_info',
       'type' => 'group',
-      'title' => 'Maps',
+      'title' => 'Post Info',
       'fields' => [
         [
-          'id' => 'maptitle',
+          'id' => 'post_type_id',
           'type' => 'text',
-          'title' => 'Title'
+          'title' => 'Post Type ID'
         ],
         [
-          'id' => 'latitude',
-          'type' => 'text',
-          'title' => 'Latitude'
+          'id' => 'labels',
+          'type' => 'group',
+          'title' => 'Labels',
+          'fields' => [
+            [
+              'id' => 'name',
+              'type' => 'select',
+              'title' => 'Name',
+              'options' => [
+                'name' => 'Name'
+              ]
+            ],
+            [
+              'id' => 'value',
+              'type' => 'text',
+              'title' => 'Value'
+            ]
+          ]
         ],
         [
-          'id' => 'longitude',
-          'type' => 'text',
-          'title' => 'Longitude'
-        ],
-        [
-          'id' => 'address',
-          'type' => 'text',
-          'title' => 'Address'
-        ],
-        [
-          'id' => 'phone',
-          'type' => 'text',
-          'title' => 'Phone'
-        ],
-        [
-          'id' => 'hours',
-          'type' => 'text',
-          'title' => 'Hours'
-        ],
-        [
-          'id' => 'website',
-          'type' => 'text',
-          'title' => 'Website'
-        ],
+        'id' => 'ispublic',
+        'type' => 'switcher',
+        'title' => 'Is Public'
+      ],
+      [
+        'id' => 'show_ui',
+        'type' => 'switcher',
+        'title' => 'SHOW UI ?'
+      ],
+      [
+        'id' => 'supports',
+        'type' => 'checkbox',
+        'title' => 'SUPPORTS',
+        'options' => [
+          'title' => 'Title',
+          'description' => 'Description',
+          'thumbnail' => 'Thumbnail'
+        ]
+      ]
       ],
      ],
     ],
