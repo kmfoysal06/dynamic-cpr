@@ -39,11 +39,8 @@ if(class_exists('CSF')){
           'fields' => [
             [
               'id' => 'name',
-              'type' => 'select',
+              'type' => 'text',
               'title' => 'Name',
-              'options' => [
-                'name' => 'Name'
-              ]
             ],
             [
               'id' => 'value',
