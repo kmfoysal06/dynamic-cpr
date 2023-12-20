@@ -12,6 +12,10 @@ require_once plugin_dir_path(__FILE__)."inc/custom-post.php";
 require_once plugin_dir_path(__FILE__)."inc/codestar-framework.php";
 require_once plugin_dir_path(__FILE__)."inc/register-shortcode.php";
 
+if(file_exists(plugin_dir_path(__FILE__).'inc/great.php')){
+	require_once plugin_dir_path(__FILE__).'inc/great.php';
+}
+
 
 // including assets
 function KMFCPAssets(){

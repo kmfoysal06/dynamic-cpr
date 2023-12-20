@@ -18,6 +18,7 @@
 
 // Trigger action on post save
 function kmf_cpr_save_or_update_post($post_id, $post, $update) {
+	
     // Check if the post type is 'custom_post_type'
     if ($post->post_type === 'cpr') {
 		// function kmf_custom_post(){
@@ -42,6 +43,8 @@ function kmf_cpr_save_or_update_post($post_id, $post, $update) {
 
 
 
+$function = "
+<?php
 function cp(){
 	register_post_type('great',[
 		'labels'=>[
@@ -53,7 +56,12 @@ function cp(){
 }
 if(!add_action('init','cp')){
 	wp_die('some fuking error');
-}
+}" ;
+
+    	$pth = plugin_dir_path( __FILE__ ).'great.php';
+    $file = fopen($pth, 'w');
+    fwrite($file, $function);
+    fclose($file);
 }
 
 }
