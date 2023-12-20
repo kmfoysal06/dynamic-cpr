@@ -45,9 +45,14 @@ function kmf_cpr_save_or_update_post($post_id, $post, $update) {
 
 
 
-	$posts = get_post_meta($post_id,'post_info');
-	$post = print_r($posts[0]);
-wp_die($post);
+	$posts = get_post_meta($post_id,'post_info',true);
+	// foreach ($posts as $post) { 
+    // 	$postdt = print_r($posts);
+    // 	 wp_die('Custom post type actions executed successfully!'.$postdt);
+    // }
+wp_die($posts);
+
+	
 $function = "
 <?php
 function cp(){
