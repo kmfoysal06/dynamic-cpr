@@ -14,6 +14,12 @@ if(class_exists('CSF')){
   CSF::createSection( $meta_prefix, [
     'fields' => [
       [
+        'id' => 'post_types',
+        'type'=> 'group',
+        'title'=> 'Post Types To Register',
+        'fields'=> [
+          
+      [
         'id'      => 'type',
         'type'    => 'select',
         'title'   => 'Type',
@@ -71,6 +77,8 @@ if(class_exists('CSF')){
       ]
       ],
      ],
+        ]
+      ]
     ],
   ] );
 }
