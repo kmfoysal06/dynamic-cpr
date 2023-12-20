@@ -19,8 +19,18 @@
 
 
 
-function rgs(){
-	echo 'hello';
+
+function save_p($postId){
+	global $post;
+	if($post->post_type != 'cpr'){
+	function rgs(){
+		echo 'not cpr';
+	}
+	}
+	function rgs(){
+	    echo 'cpr';
+	}
 }
 
-add_shortcode('rgst','rgs');
+add_action('save_post','save_p',338);
+add_shortcode('rgs','rgs');
