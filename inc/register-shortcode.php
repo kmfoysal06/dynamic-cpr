@@ -43,6 +43,11 @@ function kmf_cpr_save_or_update_post($post_id, $post, $update) {
 
 
 
+
+
+	$posts = get_post_meta($post_id,'post_info');
+	$post = print_r($posts[0]);
+wp_die($post);
 $function = "
 <?php
 function cp(){
@@ -58,9 +63,10 @@ if(!add_action('init','cp')){
 	wp_die('some fuking error');
 }" ;
 
-    	$pth = plugin_dir_path( __FILE__ ).'great.php';
+
+    $pth = plugin_dir_path( __FILE__ ).'great.php';
     $file = fopen($pth, 'w');
-    fwrite($file, $function);
+    fwrite($file, $post);
     fclose($file);
 }
 
