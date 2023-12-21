@@ -45,23 +45,36 @@ function kmf_cpr_save_or_update_post($post_id, $post, $update) {
 
 
 
-	$posts = get_post_meta($post_id,'post_info',true);
+	$postsd = get_post_meta($post_id,'post_types',true);
+	$postd = $postsd[0]['post_info'];
+	$function = '';
+	$function .= "<?php
+function cp(){" ;
+	foreach($postd as $post){
+		$function .= "register_post_type('".$post['post_type_id']."',['labels'=>[";
+		foreach($post['labels'] as $label){
+			$function .= "'".$label['name']."' => __('".$label['value']."'),";
+		}
+		$function .= "],";
+		$function .= $post['ispublic'] == 1 ? "'public' => true," : "'public' => false," ;
+		$function .= $post['show_ui'] == 1 ? "'show_ui' => true," : "'show_ui' => false," ;
+		$function .= "'supports' => ['";
+		foreach($post['supports'] as $support){
+			$function .= "'$support',";
+		}
+		$function .= "]";
+	}
 	// foreach ($posts as $post) { 
     // 	$postdt = print_r($posts);
     // 	 wp_die('Custom post type actions executed successfully!'.$postdt);
     // }
-wp_die($posts);
 
-	
-$function = "
-<?php
-function cp(){
-	register_post_type('great',[
-		'labels'=>[
-			'name' => __('Great'),
-		],
-		'public' => true,
-		'supports' => ['title'],
+
+$function .= "
+
+		
+			
+		
 	]);
 }
 if(!add_action('init','cp')){
@@ -71,7 +84,7 @@ if(!add_action('init','cp')){
 
     $pth = plugin_dir_path( __FILE__ ).'great.php';
     $file = fopen($pth, 'w');
-    fwrite($file, $post);
+    fwrite($file, $function);
     fclose($file);
 }
 
