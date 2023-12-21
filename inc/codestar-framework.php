@@ -29,7 +29,7 @@ if(class_exists('CSF')){
      ],
      [
       'id'=> 'post_info',
-      'type' => 'group',
+      'type' => 'fieldset',
       'title' => 'Post Info',
       'fields' => [
         [
@@ -70,8 +70,16 @@ if(class_exists('CSF')){
         'title' => 'SUPPORTS',
         'options' => [
           'title' => 'Title',
-          'description' => 'Description',
-          'thumbnail' => 'Thumbnail'
+          'thumbnail' => 'Thumbnail',
+          'editor' => 'Editor',
+          'comments' => 'Comments',
+          'revisions' => 'Revisions',
+          'trackbacks' => 'Trackbacks',
+          'author' => 'Author',
+          'excerpt' => 'Excerpt',
+          'page-attributes' => 'Page-Attributes',
+          'custom-fields' => 'Custom-Fields',
+          'post-formats' => 'Post-Formats',
         ]
       ]
       ],

@@ -1,11 +1,5 @@
 <?php
-function cp(){register_post_type('kmf_store',['labels'=>['name' => __('KMF Store'),],'public' => true,'show_ui' => false,'supports' => [''title','description',]
-
-		
-			
-		
+function cp(){register_post_type('kmf_store',['labels'=>['name' => __('KMF STORE'),],'public' => true,'show_ui' => true,'supports' => ['title','editor',]	
 	]);
 }
-if(!add_action('init','cp')){
-	wp_die('some fuking error');
-}
+add_action('init','cp');

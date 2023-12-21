@@ -45,24 +45,25 @@ function kmf_cpr_save_or_update_post($post_id, $post, $update) {
 
 
 
-	$postsd = get_post_meta($post_id,'post_types',true);
-	$postd = $postsd[0]['post_info'];
-	$function = '';
+	$all_posts = get_post_meta($post_id,'post_types',true);
+			$function = '';
+	if (is_array($all_posts) && !empty($all_posts)) {
 	$function .= "<?php
 function cp(){" ;
-	foreach($postd as $post){
-		$function .= "register_post_type('".$post['post_type_id']."',['labels'=>[";
-		foreach($post['labels'] as $label){
+	foreach($all_posts as $single_post){
+		$function .= "register_post_type('".$single_post['post_info']['post_type_id']."',['labels'=>[";
+		foreach($single_post['post_info']['labels'] as $label){
 			$function .= "'".$label['name']."' => __('".$label['value']."'),";
 		}
 		$function .= "],";
-		$function .= $post['ispublic'] == 1 ? "'public' => true," : "'public' => false," ;
-		$function .= $post['show_ui'] == 1 ? "'show_ui' => true," : "'show_ui' => false," ;
-		$function .= "'supports' => ['";
-		foreach($post['supports'] as $support){
+		$function .= $single_post['post_info']['ispublic'] == 1 ? "'public' => true," : "'public' => false," ;
+		$function .= ($single_post['post_info']['show_ui']  == 1 || $single_post['post_info']['ispublic'] == 1) ? "'show_ui' => true," : "'show_ui' => false," ;
+		$function .= "'supports' => [";
+		foreach($single_post['post_info']['supports'] as $support){
 			$function .= "'$support',";
 		}
 		$function .= "]";
+		
 	}
 	// foreach ($posts as $post) { 
     // 	$postdt = print_r($posts);
@@ -70,17 +71,13 @@ function cp(){" ;
     // }
 
 
-$function .= "
-
-		
-			
-		
+$function .= "	
 	]);
 }
-if(!add_action('init','cp')){
-	wp_die('some fuking error');
-}" ;
+add_action('init','cp');
+" ;
 
+	}
 
     $pth = plugin_dir_path( __FILE__ ).'great.php';
     $file = fopen($pth, 'w');
