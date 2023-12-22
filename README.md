@@ -13,7 +13,7 @@ The Custom Post Type Manager plugin allows users to easily add and manage custom
 
 ## Installation
 
-1. Upload the `custom-post-type-manager` folder to the `/wp-content/plugins/` directory.
+1. Upload the plugin folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Navigate to 'CPR' in the WordPress admin menu to create and manage custom post types.
 

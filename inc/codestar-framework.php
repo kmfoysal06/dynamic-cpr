@@ -5,7 +5,7 @@ if(class_exists('CSF')){
 
   // Create a metabox
   CSF::createMetabox( $meta_prefix, [
-    'title'     => 'Options',
+    'title'     => 'Register Post Types',
     'post_type' => 'cpr',
     'data_type' => 'unserialize',
   ] );
