@@ -62,6 +62,9 @@ A: No, the plugin is designed to be user-friendly, and no coding skills are nece
 
 For support or feature requests, please [open an issue](https://github.com/kmfoysal06/wp-dynamic-cpr/issues).
 
+## Contributing
+
+If you'd like to contribute to the development of this plugin, please follow the [contribution guidelines](CONTRIBUTING.md).
 
 ## License
 
