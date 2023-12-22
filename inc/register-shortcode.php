@@ -30,16 +30,12 @@ function cp(){
 			$function .= "'$support',";
 		}
 		$function .= "] 
-	]);
-	";
-		
+	]);";
 	}
 
 	$function .= "	
-	}
-	add_action('init','cp');
-	" ;
-
+		}
+	add_action('init','cp');" ;
 	}
 
     $pth = plugin_dir_path( __FILE__ ).'great.php';
