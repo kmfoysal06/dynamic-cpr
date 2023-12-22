@@ -1,11 +1,11 @@
 <?php
 function cp(){
-	register_post_type('kmf store',
+	register_post_type('name',
 	[
-		'labels'=>['name' => __('Post type 1'),],
+		'labels'=>['name' => __('Great IFF'),],
 		'public' => true,
 		'show_ui' => true,
-		'supports' => ['title',] 
+		'supports' => [] 
 	]);	
 		}
 	add_action('init','cp');

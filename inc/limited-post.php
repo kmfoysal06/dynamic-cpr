@@ -6,10 +6,10 @@ function limit_total_posts($data, $postarr) {
         $max_posts = 2;
 
         // Count the total number of published posts for the custom post type
-        $total_post_count = wp_count_posts('cpr')->publish;
+        $total_post_count = (isset(wp_count_posts('cpr')->publish))?wp_count_posts('cpr')->publish:0;
 
         // Check if the total number of posts has reached the limit
-        if ($total_post_count > $max_posts) {
+        if ($total_post_count >= $max_posts) {
             // If the limit is reached, prevent the post from being inserted
             $data['post_status'] = 'draft';
             wp_die('Sorry, the maximum number of posts for this custom post type has been reached.');
