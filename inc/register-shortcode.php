@@ -12,7 +12,7 @@ function cp(){
 	" ;
 	foreach($all_posts as $single_post){
 		$function .= "register_post_type('".$single_post['post_info']['post_type_id']."',
-		[
+	[
 		'labels'=>[";
 		foreach($single_post['post_info']['labels'] as $label){
 			$function .= "'".$label['name']."' => __('".$label['value']."'),";
@@ -30,7 +30,8 @@ function cp(){
 			$function .= "'$support',";
 		}
 		$function .= "] 
-	]);";
+	]);
+	";
 		
 	}
 
