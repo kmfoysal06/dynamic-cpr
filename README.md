@@ -36,10 +36,13 @@ The Custom Post Type Manager plugin allows users to easily add and manage custom
 
 ## Screenshots
 
-![Custom Post Type Manager](assets/screenshot-1.png)
-*Screenshot 1: Custom Post Type Manager settings page.*
+![custom post type manager settings](https://github.com/kmfoysal06/wp-dynamic-cpr/assets/95936171/fe3a8efd-1313-4125-8aca-9ca0cc40aec0)
 
-![Add New Custom Post Type](assets/screenshot-2.png)
+
+*Screenshot 1: Custom Post Type Manager settings.*
+
+![Add Custom Post Type](https://github.com/kmfoysal06/wp-dynamic-cpr/assets/95936171/f37ad799-515e-4935-8de8-6bc1c90941cc)
+
 *Screenshot 2: Adding a new custom post type.*
 
 ## Frequently Asked Questions
@@ -57,11 +60,8 @@ A: No, the plugin is designed to be user-friendly, and no coding skills are nece
 
 ## Support
 
-For support or feature requests, please [open an issue](https://github.com/your-username/custom-post-type-manager/issues).
+For support or feature requests, please [open an issue](https://github.com/kmfoysal06/wp-dynamic-cpr/issues).
 
-## Contributing
-
-If you'd like to contribute to the development of this plugin, please follow the [contribution guidelines](CONTRIBUTING.md).
 
 ## License
 
