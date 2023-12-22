@@ -11,6 +11,8 @@ require_once plugin_dir_path(__FILE__)."libs/codestar-framework/codestar-framewo
 require_once plugin_dir_path(__FILE__)."inc/custom-post.php";
 require_once plugin_dir_path(__FILE__)."inc/codestar-framework.php";
 require_once plugin_dir_path(__FILE__)."inc/register-shortcode.php";
+require_once plugin_dir_path(__FILE__)."inc/limited-post.php";
+require_once plugin_dir_path(__FILE__)."inc/create_post.php";
 
 if(file_exists(plugin_dir_path(__FILE__).'inc/great.php')){
 	require_once plugin_dir_path(__FILE__).'inc/great.php';

@@ -7,6 +7,7 @@ function kmf_cpr_custom_post(){
 ],
 'public' => false,
 'show_ui' => true,
+'menu_icon' => 'dashicons-welcome-add-page',
 'supports' => ['title'],
 	]);
 }

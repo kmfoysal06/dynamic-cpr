@@ -47,21 +47,3 @@ function cp(){
 }
 
 add_action('save_post', 'kmf_cpr_save_or_update_post', 10, 3);
-
-
-
-// [ 
-// 	[0] => [ 
-// 		[0] => [
-// 		 [type] => post 
-// 		 [post_info] => 
-// 		 	[ 
-// 		 		[0] => 
-// 		 		[ 
-// 		 			[post_type_id] => great 
-// 		 			[ispublic] => 1 
-// 		 			[show_ui] => ] 
-// 		 	] 
-// 		]
-// 		  ]
-// ]
