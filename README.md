@@ -66,4 +66,3 @@ For support or feature requests, please [open an issue](https://github.com/kmfoy
 ## License
 
 This plugin is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
