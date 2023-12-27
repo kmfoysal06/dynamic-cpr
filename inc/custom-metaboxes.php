@@ -37,47 +37,46 @@ class METS {
     // }
     public function html(){
         wp_nonce_field(basename(__FILE__), 'kmf_meta_nonce');
-        ?>
+      echo '
 <div class="kmf-cpr-field pt">
             <p>Post Type ID</p>
-            <input type="text" id="pt">
+            <input type="text" id="pt" name="cpr-post-id" value='.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-id','textField')).'>
         </div>
 
         <div class="kmf-cpr-field name">
             <p>Post Type Name</p>
-            <input type="text" id="name" name="name">
+            <input type="text" id="name" name="cpr-name" value='.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-title','textField')).'>
         </div>
 
         <div class="kmf-cpr-field ip">
             <p>Is Public</p>
-            <input type="checkbox" id="ip" name="ip">
+            <input type="checkbox" id="ip" name="ip" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-is-public','checkBoxField')).'>
         </div>
 
         <div class="kmf-cpr-field su">
             <p>Show UI</p>
-            <input type="checkbox" id="su" name="su">
+            <input type="checkbox" id="su" name="su" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-show-ui','checkBoxField')).'>
         </div>
 
         <div class="kmf-cpr-field sup">
                 <p>Supports</p>
                 <div class="inputs">
-                <input type="checkbox" id="title" name="supports[]" value="title">
-                <label for="title">Title</label>
+                <input type="checkbox" id="meta-title" name="supports[]" value="title" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','title')).'>
+                <label for="meta-title">Title</label>
 
-                <input type="checkbox" id="thumbnail" name="supports[]" value="thumbnail">
+                <input type="checkbox" id="thumbnail" name="supports[]" value="thumbnail" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','thumbnail')).'>
                 <label for="thumbnail">Thumbnail</label>
 
-                <input type="checkbox" id="editor" name="supports[]" value="editor">
+                <input type="checkbox" id="editor" name="supports[]" value="editor" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','editor')).'>
                 <label for="editor">Editor</label>
 
-                <input type="checkbox" id="comments" name="supports[]" value="comments">
+                <input type="checkbox" id="comments" name="supports[]" value="comments" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','comments')).'>
                 <label for="comments">Comments</label>
 
-                <input type="checkbox" id="page-attributes" name="supports[]" value="page-attributes">
+                <input type="checkbox" id="page-attributes" name="supports[]" value="page-attributes" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','page-attributes')).'>
                 <label for="page-attributes">Page Attributes</label>
                 </div>
-        </div>
-        <?php
+        </div>';
     }
 
     public function save_metabox($post_id) {
@@ -100,14 +99,24 @@ class METS {
             }
         }
         // Update the meta field in the database.
-        update_post_meta($post_id,$this->meta_slug, sanitize_text_field($_POST[$this->name_attr]));
+        update_post_meta($post_id,'cpr-id', $_POST['cpr-post-id']);
+        update_post_meta($post_id,'cpr-title', $_POST['cpr-name']);
+        update_post_meta($post_id,'cpr-is-public', $_POST['ip']);
+        update_post_meta($post_id,'cpr-show-ui', $_POST['su']);
+        update_post_meta($post_id,'cpr-supports', $_POST['supports']);
     }
 
-    public function get_the_saved_value($id,$slug,$type){
+    public function get_the_saved_value($id,$slug,$type,$needle=false){
         switch ($type) {
             case 'textField':
                 return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
                 break;
+            case 'checkBoxField':
+            return (!empty(get_post_meta($id,$slug,true) ) && get_post_meta($id,$slug,true) == true && get_post_meta($id,$slug,true) !== null)? 'checked' : '' ;
+            break;
+            case 'multiCheckBoxField':
+            return (!empty(get_post_meta($id,$slug,true) ) && in_array($needle, get_post_meta($id,$slug,true)) && get_post_meta($id,$slug,true) !== null)? 'checked' : '' ;
+            break;
             
             default:
                 return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
@@ -137,7 +146,7 @@ if(class_exists('METS')){
   // Create a metabox
   METS::createMetabox( $slug, [
     'title'     => 'Title Of Metabox',
-    'field' => 'text',
+    'field' => 'html',
     'name' => 'kmf-name'
   ] );
 
