@@ -10,6 +10,7 @@ Text Domain: kmf-custom-post
 require_once plugin_dir_path(__FILE__)."libs/fields/codestar-framework.php";
 require_once plugin_dir_path(__FILE__)."inc/custom-post.php";
 require_once plugin_dir_path(__FILE__)."inc/metaboxes.php";
+require_once plugin_dir_path(__FILE__)."inc/custom-metaboxes.php";
 require_once plugin_dir_path(__FILE__)."inc/register-post-types.php";
 require_once plugin_dir_path(__FILE__)."inc/limited-post.php";
 require_once plugin_dir_path(__FILE__)."inc/create_post.php";
