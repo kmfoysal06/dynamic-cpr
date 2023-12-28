@@ -4,7 +4,6 @@ class METS {
     public $field_type;
     public $meta_slug;
     public $meta_title;
-
     // public function __construct($name,$field,$slug,$title) {
     //  $this->name = $name;
     //  $this->slug = $slug;
@@ -36,16 +35,19 @@ class METS {
     //     ";
     // }
     public function html(){
-        wp_nonce_field(basename(__FILE__), 'kmf_meta_nonce');
-        ?>
+        wp_nonce_field(basename(__FILE__), $this->meta_slug.'_nonce');
+        echo '
+        <input type="hidden" name="'.$this->meta_slug.'[]">
 <div class="kmf-cpr-field pt">
             <p>Post Type ID</p>
-            <input type="text" id="pt">
+            <input type="text" id="pt" name="'.$this->meta_slug.'[pt]" value='.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug,"rat","pt")).'>
         </div>
 
         <div class="kmf-cpr-field name">
             <p>Post Type Name</p>
-            <input type="text" id="name" name="name">
+            ';
+// <input type="text" id="name" name="'.$this->meta_slug.'[cpr_post_type_title]" value='.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug,"grat","cpr_post_type_title")).'>
+    echo'
         </div>
 
         <div class="kmf-cpr-field ip">
@@ -76,17 +78,16 @@ class METS {
                 <input type="checkbox" id="page-attributes" name="supports[]" value="page-attributes">
                 <label for="page-attributes">Page Attributes</label>
                 </div>
-        </div>
-        <?php
+        </div>' ;
     }
 
     public function save_metabox($post_id) {
         // Check if nonce is set.
-        if (!isset($_POST['kmf_meta_nonce'])) {
+        if (!isset($_POST[$this->meta_slug.'_nonce'])) {
             return;
         }
         // Verify nonce.
-        if (!wp_verify_nonce($_POST['kmf_meta_nonce'], basename(__FILE__))) {
+        if (!wp_verify_nonce($_POST[$this->meta_slug.'_nonce'], basename(__FILE__))) {
             return;
         }
         // Check if this is an autosave.
@@ -100,15 +101,20 @@ class METS {
             }
         }
         // Update the meta field in the database.
-        update_post_meta($post_id,$this->meta_slug, sanitize_text_field($_POST[$this->name_attr]));
+        update_post_meta($post_id,$this->meta_slug, $_POST[$this->meta_slug]);
     }
 
-    public function get_the_saved_value($id,$slug,$type){
+    public function get_the_saved_value($id,$slug,$type,$neddle=false){
         switch ($type) {
             case 'textField':
                 return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
                 break;
-            
+            case 'selectBoxField':
+                return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
+                break;
+            case 'MultiSelectBoxField':
+                return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
+                break;
             default:
                 return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
                 break;
@@ -126,18 +132,21 @@ class METS {
         $instance->meta_title = $data['title'] ;
         add_action("add_meta_boxes", [$instance,'create_metabox']);
         add_action("save_post", [$instance,'save_metabox']);
+// echo print_r($instance->get_the_saved_value(get_the_ID(),$instance->meta_slug,"grat","cpr_post_type_title"));
+        echo print_r($_POST);
+        die();
     }
 }
 
 // new METS('kmf-name','text','kmf-meta');
 if(class_exists('METS')){
     // Set a unique prefix for the metabox
-  $slug = 'kmf_custom_post_meta';
+  $slug = 'kmf-cpr-meta';
 
   // Create a metabox
   METS::createMetabox( $slug, [
     'title'     => 'Title Of Metabox',
-    'field' => 'text',
+    'field' => 'html',
     'name' => 'kmf-name'
   ] );
 
