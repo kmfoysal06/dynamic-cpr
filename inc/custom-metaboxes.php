@@ -37,7 +37,7 @@ class METS {
     public function html(){
         wp_nonce_field(basename(__FILE__), $this->meta_slug.'_nonce');
         echo '
-        <input type="hidden" name="'.$this->meta_slug.'[]">
+        <input type="hidden" name="'.$this->meta_slug.'">
 <div class="kmf-cpr-field pt">
             <p>Post Type ID</p>
             <input type="text" id="pt" name="'.$this->meta_slug.'[pt]" value='.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug,"rat","pt")).'>
@@ -132,6 +132,8 @@ class METS {
         $instance->meta_title = $data['title'] ;
         add_action("add_meta_boxes", [$instance,'create_metabox']);
         add_action("save_post", [$instance,'save_metabox']);
+        echo print_r(get_post_meta(get_the_ID(),'kmf-cpr-meta',true));
+        // die();
 // echo print_r($instance->get_the_saved_value(get_the_ID(),$instance->meta_slug,"grat","cpr_post_type_title"));
     }
 }
