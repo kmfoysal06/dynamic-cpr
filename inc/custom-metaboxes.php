@@ -116,7 +116,7 @@ class METS {
                 return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
                 break;
             default:
-                return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
+                return get_post_meta($id,$slug,true)[$neddle] !== null ? get_post_meta($id,$slug,true)[$neddle] : '' ;
                 break;
         }
         
@@ -133,8 +133,6 @@ class METS {
         add_action("add_meta_boxes", [$instance,'create_metabox']);
         add_action("save_post", [$instance,'save_metabox']);
 // echo print_r($instance->get_the_saved_value(get_the_ID(),$instance->meta_slug,"grat","cpr_post_type_title"));
-        echo print_r($_POST);
-        die();
     }
 }
 
