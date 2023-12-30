@@ -41,46 +41,45 @@ class METS {
       echo '
 <div class="kmf-cpr-field pt">
             <p>Post Type ID</p>
-            <input type="text" id="pt" name="'.$this->meta_slug.'[cpr_id]" value='.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'greatfullField','cpr_id')).'>
+            <input type="text" id="pt" name="'.$this->meta_slug.'[cpr_id]" value="'.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text').'">
         </div>
 
         <div class="kmf-cpr-field name">
             <p>Post Type Name</p>
-            <input type="text" id="name" name="'.$this->meta_slug.'[cpr_name]" value='.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-title','textField','cpr_name')).'>
+            <input type="text" id="name" name="'.$this->meta_slug.'[cpr_name]">
         </div>
 
         <div class="kmf-cpr-field ip">
             <p>Is Public</p>
-            <input type="checkbox" id="ip" name="ip" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-is-public','checkBoxField')).'>
+            <input type="checkbox" id="ip" name="'.$this->meta_slug.'[ip]">
         </div>
 
         <div class="kmf-cpr-field su">
             <p>Show UI</p>
-            <input type="checkbox" id="su" name="su" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-show-ui','checkBoxField')).'>
+            <input type="checkbox" id="su" name="'.$this->meta_slug.'[su]" >
         </div>
 
         <div class="kmf-cpr-field sup">
                 <p>Supports</p>
                 <div class="inputs">
-                <input type="checkbox" id="meta-title" name="supports[]" value="title" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','title')).'>
+                <input type="checkbox" id="meta-title" name="'.$this->meta_slug.'[supports][]" value="title" >
                 <label for="meta-title">Title</label>
 
-                <input type="checkbox" id="thumbnail" name="supports[]" value="thumbnail" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','thumbnail')).'>
+                <input type="checkbox" id="thumbnail" name="'.$this->meta_slug.'[supports][]" value="thumbnail" >
                 <label for="thumbnail">Thumbnail</label>
 
-                <input type="checkbox" id="editor" name="supports[]" value="editor" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','editor')).'>
+                <input type="checkbox" id="editor" name="'.$this->meta_slug.'[supports][]" value="editor" >
                 <label for="editor">Editor</label>
 
-                <input type="checkbox" id="comments" name="supports[]" value="comments" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','comments')).'>
+                <input type="checkbox" id="comments" name="'.$this->meta_slug.'[supports][]" value="comments" >
                 <label for="comments">Comments</label>
 
-                <input type="checkbox" id="page-attributes" name="supports[]" value="page-attributes" '.esc_attr($this->get_the_saved_value(get_the_ID(),'cpr-supports','multiCheckBoxField','page-attributes')).'>
+                <input type="checkbox" id="page-attributes" name="'.$this->meta_slug.'[supports][]" value="page-attributes" >
                 <label for="page-attributes">Page Attributes</label>
                 </div>
         </div>';
-        echo var_dump($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'greatfullField','cpr_id')); 
-    }
-
+        echo var_dump($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text'));
+}
     public function save_metabox($post_id) {
         $this->meta_id = $post_id;
         // Check if nonce is set.
@@ -111,23 +110,61 @@ class METS {
     }
 
     public function get_the_saved_value($id,$slug,$type,$needle=false){
-        switch ($type) {
-            case 'textField':
-                return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
-                break;
-            case 'checkBoxField':
-            return (!empty(get_post_meta($id,$slug,true) ) && get_post_meta($id,$slug,true) == true && get_post_meta($id,$slug,true) !== null)? 'checked' : '' ;
-            break;
-            case 'multiCheckBoxField':
-            return (!empty(get_post_meta($id,$slug,true) ) && in_array($needle, get_post_meta($id,$slug,true)) && get_post_meta($id,$slug,true) !== null)? 'checked' : '' ;
-            break;
+        // switch ($type) {
+        //     case 'textField':
+        //         return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
+        //         break;
+        //     case 'checkBoxField':
+        //     return (!empty(get_post_meta($id,$slug,true) ) && get_post_meta($id,$slug,true) == true && get_post_meta($id,$slug,true) !== null)? 'checked' : '' ;
+        //     break;
+        //     case 'multiCheckBoxField':
+        //     return (!empty(get_post_meta($id,$slug,true) ) && in_array($needle, get_post_meta($id,$slug,true)) && get_post_meta($id,$slug,true) !== null)? 'checked' : '' ;
+        //     break;
             
-            default:
-                return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
-                break;
-        }
-        
+        //     default:
+        //         return get_post_meta($id,$slug,true) !== null && !empty(get_post_meta($id,$slug,true)) ? get_post_meta($id,$slug,true) : [] ;
+        //         break;
+        // }
+        $dbs = get_post_meta($id,$slug,true);
+        // $cpr_supports = [];
+        // foreach($dbs as $db){
+        //     if(array_key_exists('cpr_id', $db)){
+        //         $cpr_id = $db['cpr_id'];
+        //     }
+        //     if(array_key_exists('cpr_name', $db)){
+        //         $cpr_name = $db['cpr_name'];
+        //     }
+        //     if(array_key_exists('ip', $db)){
+        //         $cpr_ip = $db['ip'];
+        //     }
+        //     if(array_key_exists('su', $db)){
+        //         $cpr_su = $db['su'];
+        //     }
+        //     if(array_key_exists('supports', $db)){
+        //         foreach($db['supports'] as $key=>$value){
+        //              $cpr_supports[$key][] = $value;
+        //         }
+        //     }
+
+        // }
+        // return $this->sanitize_data($dbs,$slug,$type);
+        return $dbs;
+
     }
+
+    public function sanitize_data($data,$slug,$type){
+        switch($type){
+            case 'text':
+            foreach($data as $single_data){
+                if(array_key_exists($slug, $single_data)){
+                    return $single_data[$slug];
+                }
+            }
+            break;
+
+        }
+    }
+    
     public static function createMetabox(string $slug,array $data){
         global $post;
         if(empty($slug) || empty($data)){
