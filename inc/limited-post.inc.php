@@ -3,7 +3,7 @@ function limit_total_posts($data, $postarr) {
     // Check if it's the custom post type you want to limit
     if ($data['post_type'] == 'cpr') {
         // Set the maximum allowed posts
-        $max_posts = 2;
+        $max_posts = 6;
 
         // Count the total number of published posts for the custom post type
         $total_post_count = (isset(wp_count_posts('cpr')->publish))?wp_count_posts('cpr')->publish:0;

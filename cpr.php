@@ -8,16 +8,20 @@ Author URI: https://www.github.com/kmfoysal06
 Text Domain: kmf-custom-post
 */
 require_once plugin_dir_path(__FILE__)."libs/fields/codestar-framework.php";
-require_once plugin_dir_path(__FILE__)."inc/custom-post.php";
+require_once plugin_dir_path(__FILE__)."inc/custom-post.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/metaboxes.php";
-require_once plugin_dir_path(__FILE__)."inc/custom-metaboxes.php";
-require_once plugin_dir_path(__FILE__)."inc/register-post-types-custom-metas.php";
-require_once plugin_dir_path(__FILE__)."inc/limited-post.php";
-require_once plugin_dir_path(__FILE__)."inc/create_post.php";
+require_once plugin_dir_path(__FILE__)."inc/custom-metaboxes.inc.php";
+require_once plugin_dir_path(__FILE__)."inc/register-post-types-custom-metas.inc.php";
+require_once plugin_dir_path(__FILE__)."inc/limited-post.inc.php";
+require_once plugin_dir_path(__FILE__)."inc/create_post.inc.php";
+require_once plugin_dir_path(__FILE__)."inc/delete-when-post-deleted.php";
 
-if(file_exists(plugin_dir_path(__FILE__).'inc/great.php')){
-	require_once plugin_dir_path(__FILE__).'inc/great.php';
+// loading all post type register files
+$post_type_files = glob(plugin_dir_path(__FILE__) . 'inc/*.post_type.php');
+foreach ($post_type_files as $file){
+	require_once $file;
 }
+
 
 
 // including assets

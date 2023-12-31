@@ -65,6 +65,9 @@ class METS {
         </div>';
 }
     public function save_metabox($post_id) {
+         if (wp_is_post_revision($post_id) || defined('DOING_AUTOSAVE') && DOING_AUTOSAVE || wp_is_post_autosave($post_id) || wp_is_post_autosave($post_id) || wp_is_post_autosave($post_id)) {
+            return;
+            }
         $this->meta_id = $post_id;
         // Check if nonce is set.
         if (!isset($_POST['kmf_meta_nonce'])) {
@@ -96,7 +99,8 @@ class METS {
     }
 
     public function sanitize_data($data,$data_key,$type,$neddle_for_multiselect=false){
-                switch($type){
+                if(is_array($data)){
+                    switch($type){
                     case 'text':
                         if(array_key_exists($data_key, $data) && $data[$data_key] !== null){
                             return $data[$data_key];
@@ -121,6 +125,7 @@ class METS {
                         return 'this is a default text.you might added something that not set by us.try text,select and multi_select as $type paramiter';
                         break;
                          }
+                }
         }
     
     public static function createMetabox(string $slug,array $data){
@@ -146,7 +151,7 @@ if(class_exists('METS')){
 
   // Create a metabox
   METS::createMetabox($slug, [
-    'title'     => 'Title Of Metabox',
+    'title'     => 'Register Post Type',
     'field' => 'html',
     'name' => 'kmf-name'
   ] );
