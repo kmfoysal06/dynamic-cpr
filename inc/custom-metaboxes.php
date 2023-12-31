@@ -41,44 +41,44 @@ class METS {
       echo '
 <div class="kmf-cpr-field pt">
             <p>Post Type ID</p>
-            <input type="text" id="pt" name="'.$this->meta_slug.'[cpr_id]" value="'.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text').'">
+            <input type="text" id="pt" name="'.$this->meta_slug_og.'[cpr_id]" value="'.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_id').'">
         </div>
 
         <div class="kmf-cpr-field name">
             <p>Post Type Name</p>
-            <input type="text" id="name" name="'.$this->meta_slug.'[cpr_name]">
+            <input type="text" id="name" name="'.$this->meta_slug_og.'[cpr_name]" value="'.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_name').'">
         </div>
 
         <div class="kmf-cpr-field ip">
             <p>Is Public</p>
-            <input type="checkbox" id="ip" name="'.$this->meta_slug.'[ip]">
+            <input type="checkbox" id="ip" name="'.$this->meta_slug_og.'[ip]" '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','ip').'>
         </div>
 
         <div class="kmf-cpr-field su">
             <p>Show UI</p>
-            <input type="checkbox" id="su" name="'.$this->meta_slug.'[su]" >
+            <input type="checkbox" id="su" name="'.$this->meta_slug_og.'[su]" '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','su').'>
         </div>
 
         <div class="kmf-cpr-field sup">
                 <p>Supports</p>
                 <div class="inputs">
-                <input type="checkbox" id="meta-title" name="'.$this->meta_slug.'[supports][]" value="title" >
+                <input type="checkbox" id="meta-title" name="'.$this->meta_slug_og.'[supports][]" value="title" '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','title').'>
                 <label for="meta-title">Title</label>
 
-                <input type="checkbox" id="thumbnail" name="'.$this->meta_slug.'[supports][]" value="thumbnail" >
+                <input type="checkbox" id="thumbnail" name="'.$this->meta_slug_og.'[supports][]" value="thumbnail" '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','thumbnail').'>
                 <label for="thumbnail">Thumbnail</label>
 
-                <input type="checkbox" id="editor" name="'.$this->meta_slug.'[supports][]" value="editor" >
+                <input type="checkbox" id="editor" name="'.$this->meta_slug_og.'[supports][]" value="editor" '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','editor').'>
                 <label for="editor">Editor</label>
 
-                <input type="checkbox" id="comments" name="'.$this->meta_slug.'[supports][]" value="comments" >
+                <input type="checkbox" id="comments" name="'.$this->meta_slug_og.'[supports][]" value="comments" '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','comments').'>
                 <label for="comments">Comments</label>
 
-                <input type="checkbox" id="page-attributes" name="'.$this->meta_slug.'[supports][]" value="page-attributes" >
+                <input type="checkbox" id="page-attributes" name="'.$this->meta_slug_og.'[supports][]" value="page-attributes"  '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','page-attributes').'>
                 <label for="page-attributes">Page Attributes</label>
                 </div>
         </div>';
-        echo var_dump($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text'));
+        echo var_dump($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','title'));
 }
     public function save_metabox($post_id) {
         $this->meta_id = $post_id;
@@ -104,66 +104,37 @@ class METS {
         // update_post_meta($post_id,'cpr-id', $_POST['cpr-post-id']);
         // update_post_meta($post_id,'cpr-title', $_POST['cpr-name']);
         update_post_meta($post_id,$this->meta_slug_og, $_POST[$this->meta_slug_og]);
-        update_post_meta($post_id,'cpr-is-public', $_POST['ip']);
-        update_post_meta($post_id,'cpr-show-ui', $_POST['su']);
-        update_post_meta($post_id,'cpr-supports', $_POST['supports']);
     }
 
-    public function get_the_saved_value($id,$slug,$type,$needle=false){
-        // switch ($type) {
-        //     case 'textField':
-        //         return get_post_meta($id,$slug,true) !== null ? get_post_meta($id,$slug,true) : '' ;
-        //         break;
-        //     case 'checkBoxField':
-        //     return (!empty(get_post_meta($id,$slug,true) ) && get_post_meta($id,$slug,true) == true && get_post_meta($id,$slug,true) !== null)? 'checked' : '' ;
-        //     break;
-        //     case 'multiCheckBoxField':
-        //     return (!empty(get_post_meta($id,$slug,true) ) && in_array($needle, get_post_meta($id,$slug,true)) && get_post_meta($id,$slug,true) !== null)? 'checked' : '' ;
-        //     break;
-            
-        //     default:
-        //         return get_post_meta($id,$slug,true) !== null && !empty(get_post_meta($id,$slug,true)) ? get_post_meta($id,$slug,true) : [] ;
-        //         break;
-        // }
+    public function get_the_saved_value($id,$slug,$type,$key,$needle=false){
         $dbs = get_post_meta($id,$slug,true);
-        // $cpr_supports = [];
-        // foreach($dbs as $db){
-        //     if(array_key_exists('cpr_id', $db)){
-        //         $cpr_id = $db['cpr_id'];
-        //     }
-        //     if(array_key_exists('cpr_name', $db)){
-        //         $cpr_name = $db['cpr_name'];
-        //     }
-        //     if(array_key_exists('ip', $db)){
-        //         $cpr_ip = $db['ip'];
-        //     }
-        //     if(array_key_exists('su', $db)){
-        //         $cpr_su = $db['su'];
-        //     }
-        //     if(array_key_exists('supports', $db)){
-        //         foreach($db['supports'] as $key=>$value){
-        //              $cpr_supports[$key][] = $value;
-        //         }
-        //     }
-
-        // }
-        // return $this->sanitize_data($dbs,$slug,$type);
-        return $dbs;
-
+        return $this->sanitize_data($dbs,$key,$needle,$type);
     }
 
-    public function sanitize_data($data,$slug,$type){
-        switch($type){
-            case 'text':
-            foreach($data as $single_data){
-                if(array_key_exists($slug, $single_data)){
-                    return $single_data[$slug];
-                }
-            }
-            break;
-
+    public function sanitize_data($data,$data_key,$neddle_for_multiselect=false,$type){
+                switch($type){
+                    case 'text':
+                        if(array_key_exists($data_key, $data) && $data[$data_key] !== null){
+                            return $data[$data_key];
+                        }
+                        break;
+                    case 'select':
+                        if(array_key_exists($data_key, $data) && $data[$data_key] !== null){
+                            return $data[$data_key] = 'on' ;
+                        }
+                        break;
+                    case 'multi_select':
+                        foreach ($data as $key => $assoc_value) {
+                            if(is_array($assoc_value) && array_key_exists($key,$assoc_value)){
+                                foreach($assoc_value as $value){
+                                     array_push($value,$key);
+                                }
+                            }
+                        }
+                        return array_key_exists($data_key, $data) ? (is_array($data[$data_key]) && in_array($neddle_for_multiselect, $data[$data_key]) ? 'checked': '') : '';
+                        break;
+                         }
         }
-    }
     
     public static function createMetabox(string $slug,array $data){
         global $post;
@@ -180,8 +151,7 @@ class METS {
         add_action("save_post", [$instance,'save_metabox']);
 
     }
-}
-
+        }
 // new METS('kmf-name','text','kmf-meta');
 if(class_exists('METS')){
     // Set a unique prefix for the metabox
