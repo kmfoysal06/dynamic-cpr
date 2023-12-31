@@ -1,5 +1,5 @@
 <?php
-if(class_exists('CSF')){
+if(!class_exists('CSF')){
     // Set a unique prefix for the metabox
   $meta_prefix = 'kmf_custom_post_meta';
 

@@ -5,15 +5,7 @@ class METS {
     public $meta_slug;
     public $meta_title;
     public $meta_id;
-
-    // public function __construct($name,$field,$slug,$title) {
-    //  $this->name = $name;
-    //  $this->slug = $slug;
-    //  $this->field_type = $this->init_field($field);
-    //  $this->meta_title = $title ;
-    //     add_action("add_meta_boxes", [$this, 'create_metabox']);
-    //     add_action("save_post", [$this, 'save_metabox']);
-    // }
+    
     public function init_field($field){
         switch ($field) {
             case 'text':
@@ -29,13 +21,6 @@ class METS {
     public function create_metabox() {
         add_meta_box('kmf_meta', $this->meta_title, [$this, $this->field_type], 'cpr');
     }
-
-    // public function textField() {
-    //     wp_nonce_field(basename(__FILE__), 'kmf_meta_nonce');
-    //     echo "
-    //     <input type='text' id='kmf_metabox' name='".$this->name_attr."' value='" . esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug,$this->field_type)) . "' >
-    //     ";
-    // }
     public function html(){
         wp_nonce_field(basename(__FILE__), 'kmf_meta_nonce');
       echo '
@@ -78,7 +63,6 @@ class METS {
                 <label for="page-attributes">Page Attributes</label>
                 </div>
         </div>';
-        echo var_dump($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','title'));
 }
     public function save_metabox($post_id) {
         $this->meta_id = $post_id;
@@ -108,10 +92,10 @@ class METS {
 
     public function get_the_saved_value($id,$slug,$type,$key,$needle=false){
         $dbs = get_post_meta($id,$slug,true);
-        return $this->sanitize_data($dbs,$key,$needle,$type);
+        return $this->sanitize_data($dbs,$key,$type,$needle);
     }
 
-    public function sanitize_data($data,$data_key,$neddle_for_multiselect=false,$type){
+    public function sanitize_data($data,$data_key,$type,$neddle_for_multiselect=false){
                 switch($type){
                     case 'text':
                         if(array_key_exists($data_key, $data) && $data[$data_key] !== null){
@@ -120,7 +104,7 @@ class METS {
                         break;
                     case 'select':
                         if(array_key_exists($data_key, $data) && $data[$data_key] !== null){
-                            return $data[$data_key] = 'on' ;
+                            return $data[$data_key] == 'on' ? 'checked' : '' ;
                         }
                         break;
                     case 'multi_select':
@@ -132,6 +116,9 @@ class METS {
                             }
                         }
                         return array_key_exists($data_key, $data) ? (is_array($data[$data_key]) && in_array($neddle_for_multiselect, $data[$data_key]) ? 'checked': '') : '';
+                        break;
+                        default:
+                        return 'this is a default text.you might added something that not set by us.try text,select and multi_select as $type paramiter';
                         break;
                          }
         }
