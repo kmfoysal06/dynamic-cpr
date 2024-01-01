@@ -1,5 +1,5 @@
 <?php
-function cp_427(){
+function cp_438(){
 	register_post_type('',
 	[
 		'labels'=>[ 'name' => __(''),
@@ -9,4 +9,4 @@ function cp_427(){
 		'supports' => [] 
 	]);	
 		}
-	add_action('init','cp_427');
+	add_action('init','cp_438');
