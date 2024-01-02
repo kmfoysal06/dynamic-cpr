@@ -12,7 +12,6 @@ require_once plugin_dir_path(__FILE__)."inc/custom-post.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/metaboxes.php";
 require_once plugin_dir_path(__FILE__)."inc/custom-metaboxes.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/register-post-types-custom-metas.inc.php";
-require_once plugin_dir_path(__FILE__)."inc/limited-post.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/create_post.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/delete-when-post-deleted.php";
 
