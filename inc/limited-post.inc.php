@@ -1,20 +1,20 @@
 <?php
-function limit_total_posts($data, $postarr) {
+function limit_total_posts($post_ID, $post, $update) {
     // Check if it's the custom post type you want to limit
-    if ($data['post_type'] == 'cpr' && !(wp_is_post_revision($postarr["ID"]) || defined('DOING_AUTOSAVE') && DOING_AUTOSAVE || wp_is_post_autosave($postarr["ID"]))) {
+    if (!$update && $post->post_type == 'cpr') {
         // Set the maximum allowed posts
         $max_posts = 6;
 
         // Count the total number of published posts for the custom post type
-        $total_post_count = (isset(wp_count_posts('cpr')->publish) &&  ( 'trash' != $data['post_status'] ))?wp_count_posts('cpr')->publish:0;
+        $total_post_count = wp_count_posts('cpr')->publish;
 
         // Check if the total number of posts has reached the limit
         if ($total_post_count >= $max_posts) {
             // If the limit is reached, prevent the post from being inserted
-            $data['post_status'] = 'draft';
+            wp_trash_post($post_ID); // Move the post to trash
             wp_die('Sorry, the maximum number of posts for this custom post type has been reached.');
         }
     }
 }
 
-add_filter('wp_insert_post_data', 'limit_total_posts', 10, 2);
+add_action('wp_insert_post', 'limit_total_posts', 10, 3);

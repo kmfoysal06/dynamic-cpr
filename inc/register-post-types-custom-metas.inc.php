@@ -1,7 +1,8 @@
 <?php
 // Trigger action on post save
 function kmf_cpr_save_or_update_post($post_id, $post, $update) {
-    // Check if the post type is 'custom_post_type'
+if($update){
+	    // Check if the post type is 'custom_post_type'
     if ($post->post_type === 'cpr') {
 	$post_type_info = get_post_meta($post_id,'kmf_custom_post_meta_2',true);
 	$function = '';
@@ -37,7 +38,7 @@ function cp_".$post_id."(){
     fwrite($file, $function);
     fclose($file);
 }
-
+}
 }
 
 add_action('save_post', 'kmf_cpr_save_or_update_post', 10, 3);
