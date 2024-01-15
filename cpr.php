@@ -2,7 +2,7 @@
 /*
 Plugin Name: KMF Custom Post
 Description: custom post and texonomy registor by kmf
-Version: 1.0
+Version: 2.1
 Author: Kazi Mohammad Foysal
 Author URI: https://www.github.com/kmfoysal06
 Text Domain: kmf-custom-post
