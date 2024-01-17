@@ -1,6 +1,10 @@
 <?php
+if(!defined('ABSPATH')){
+	exit;
+	// exit if accessed directly
+}
 // Trigger action on post save
-function kmf_cpr_save_or_update_post($post_id, $post, $update) {
+function kmf_dynamic_cpr_save_update_post($post_id, $post, $update) {
 if($update){
 	    // Check if the post type is 'custom_post_type'
     if ($post->post_type === 'cpr') {
@@ -8,7 +12,7 @@ if($update){
 	$function = '';
 	if (is_array($post_type_info) && !empty($post_type_info)) {
 	$function .= "<?php
-function cp_".$post_id."(){
+function kmf_dynamic_cpr_cp_".$post_id."(){
 	" ;
 		$function .= "register_post_type('".$post_type_info['cpr_id']."',
 	[
@@ -30,7 +34,7 @@ function cp_".$post_id."(){
 
 	$function .= "	
 		}
-	add_action('init','cp_".$post_id."');" ;
+	add_action('init','kmf_dynamic_cpr_cp_".$post_id."');" ;
 	}
 
     $pth = plugin_dir_path( __FILE__ ).''.$post_id.'.post_type.php';
@@ -41,11 +45,11 @@ function cp_".$post_id."(){
 }
 }
 
-add_action('save_post', 'kmf_cpr_save_or_update_post', 10, 3);
+add_action('save_post', 'kmf_dynamic_cpr_save_update_post', 10, 3);
 // Hook to the post_updated_messages filter
-add_filter('post_updated_messages', 'cpr_updated_message');
+add_filter('post_updated_messages', 'kmf_dynamic_cpr_updated_message');
 
-function cpr_updated_message($messages) {
+function kmf_dynamic_cpr_updated_message($messages) {
     global $post, $post_ID;
 
     // Check if the post type is 'cpr'

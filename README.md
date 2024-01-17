@@ -53,7 +53,7 @@ A: No, the plugin is designed to be user-friendly, and no coding skills are nece
 
 ## Changelog
 
-### 2.1.0
+### 2.0.0
 - Initial release
 
 ## Support

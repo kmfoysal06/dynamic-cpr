@@ -1,6 +1,6 @@
 <?php 
-add_action('init','kmf_cpr_custom_post');
-function kmf_cpr_custom_post(){
+add_action('init','kmf_dynamic_cpr_custom_post');
+function kmf_dynamic_cpr_custom_post(){
 	register_post_type("cpr",[
 'labels' => [
 	'name' => __('CPR'),
