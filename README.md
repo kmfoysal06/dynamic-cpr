@@ -20,28 +20,25 @@ The Custom Post Type Manager plugin allows users to easily add and manage custom
 ## Usage
 
 1. **Create a Custom Post Type:**
-   - Go To The 'Cpr' Menu In The Wordpress Admin.
+   - Go To The *'CPR'* Menu In The Wordpress Admin.
    - Click Add New Post
    - Fill The Informations For Creating Post Type
    - Every Time You Want To Add A New Post Type You Have To Add A New Post
 
 2. **Manage Custom Post Types:**
-   - View a list of all created custom post types on the 'Custom Post Types'.
-   - Edit or delete existing custom post types as needed.
+   - View a list of all created custom post types on the *'CPR'*.
+   - Edit or delete existing custom post types as needed.(You have to delete post permanently from trash if you want to delete a *post type*)
 
 3. **Configure Settings:**
    - Customize labels, supports, and other settings for each custom post type.
    - Settings are available within the edit section of each custom post type.
 ## Screenshots
 
-![custom post type manager settings](https://github.com/kmfoysal06/wp-dynamic-cpr/assets/95936171/fe3a8efd-1313-4125-8aca-9ca0cc40aec0)
+
+![addin custom post type](https://github.com/kmfoysal06/wp-dynamic-cpr/assets/95936171/c3cee91d-76ad-47bf-91ec-962faf2e4b99)
 
 
-*Screenshot 1: Custom Post Type Manager settings.*
-
-![Add Custom Post Type](https://github.com/kmfoysal06/wp-dynamic-cpr/assets/95936171/f37ad799-515e-4935-8de8-6bc1c90941cc)
-
-*Screenshot 2: Adding a new custom post type.*
+*Screenshot 1: Custom Post Type Manager settings.* and * Adding a new custom post type.*
 
 ## Frequently Asked Questions
 
