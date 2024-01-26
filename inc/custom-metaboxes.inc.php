@@ -71,7 +71,7 @@ class KMF_Dynamic_Cpr_METS {
 
 
     public function save_metabox($post_id) {
-         if (wp_is_post_revision($post_id) || defined('DOING_AUTOSAVE') && DOING_AUTOSAVE || wp_is_post_autosave($post_id) || wp_is_post_autosave($post_id) || wp_is_post_autosave($post_id)) {
+         if (wp_is_post_revision($post_id) || defined('DOING_AUTOSAVE') && DOING_AUTOSAVE || wp_is_post_autosave($post_id) ){
             return;
             }
         $this->meta_id = $post_id;
