@@ -3,44 +3,45 @@ if(!defined('ABSPATH')){
 	exit;
 	// exit if accessed directly
 }
-function createCustomPostTypes($slug='',$name='',$public=false,$showui=false, array $supports = array()){
+function createCustomPostTypes($slug,$name,$public,$showui,$supports){
             register_post_type($slug,[
                 'labels' => [
                     'name' => $name,
                 ],
                 'public' => $public,
-                'show_ui' => ($public == true || $showui),
+                'show_ui' => $showui,
                 'supports' => $supports,
                     ]);
     }
 add_action('init', "kmf_cpr_register_post_types");
 function kmf_cpr_register_post_types(){
 	$query = new WP_Query(['post_type'=>'cpr','posts_per_page'=>'-1']);
-	if($query->have_posts()){
-		while($query->have_posts()){
-			$query->the_post();
-			$post_type_info = get_post_meta(get_the_ID(),'kmf_custom_post_meta_2',true);
-			if (!empty($post_type_info)) {
-				if (isset($post_type_info['ip'])) {
-					$public = ($post_type_info['ip'] == 'on') ? true : false;
-				} else {
+	while($query->have_posts()){
+		$query->the_post();
+		$post_type_info = get_post_meta(get_the_ID(),'kmf_custom_post_meta_2',true);
+		if(!empty($post_type_info)){
+			if(isset($post_type_info['ip'])){
+				if(($post_type_info['ip'] == 'on')){
+					$public = true;
+				}else{
 					$public = false;
 				}
-				if (isset($post_type_info['su'])) {
-					$showui = ($post_type_info['su'] == 'on');
-				} else {
+			}else{
+				$public = false;
+			}
+			if(isset($post_type_info['su'])){
+				if(($post_type_info['su']  == 'on' || $post_type_info['ip'] == 'on' )){
+					$showui = true;
+				}else{
 					$showui = false;
 				}
-				createCustomPostTypes($post_type_info['cpr_id'],$post_type_info['cpr_name'],$public, $showui,isset($post_type_info['supports'])?$post_type_info['supports']:[]);
-			} else {
-				$public = false;
+			}else{
 				$showui = false;
 			}
 			
-				
-				
-			}
+			createCustomPostTypes($post_type_info['cpr_id'],$post_type_info['cpr_name'],$public, $showui,$post_type_info['supports']);
 		}
+	}
 	}
 // Hook to the post_updated_messages filter
 add_filter('post_updated_messages', 'kmf_dynamic_cpr_updated_message');
