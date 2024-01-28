@@ -23,4 +23,5 @@ function kmf_dynamic_cpr_create_post(){
     }
     }
 }
+
 add_action('init','kmf_dynamic_cpr_create_post');
