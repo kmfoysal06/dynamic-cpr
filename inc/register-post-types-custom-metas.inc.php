@@ -3,7 +3,7 @@ if(!defined('ABSPATH')){
 	exit;
 	// exit if accessed directly
 }
-function createCustomPostTypes($slug='',$name='',$public=false,$showui=false, array $supports = array()){
+function kmf_cpr_createCustomPostTypes($slug='',$name='',$public=false,$showui=false, array $supports = array()){
             register_post_type($slug,[
                 'labels' => [
                     'name' => $name,
@@ -31,7 +31,7 @@ function kmf_cpr_register_post_types(){
 				} else {
 					$showui = false;
 				}
-				createCustomPostTypes($post_type_info['cpr_id'],$post_type_info['cpr_name'],$public, $showui,isset($post_type_info['supports'])?$post_type_info['supports']:[]);
+				kmf_cpr_createCustomPostTypes($post_type_info['cpr_id'],$post_type_info['cpr_name'],$public, $showui,isset($post_type_info['supports'])?$post_type_info['supports']:[]);
 			} else {
 				$public = false;
 				$showui = false;

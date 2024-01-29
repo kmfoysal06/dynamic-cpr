@@ -1,6 +1,6 @@
 <?php 
 /*
-Plugin Name: Custom Post Type Register
+Plugin Name: Custom Post Type Register main
 Description: custom post and texonomy registor by kmf
 Version: 2.0
 Author: Kazi Mohammad Foysal
