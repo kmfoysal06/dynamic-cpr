@@ -7,6 +7,7 @@ class KMF_Dynamic_Cpr_METS {
     public $name_attr;
     public $field_type;
     public $meta_slug;
+    public $meta_slug_og;
     public $meta_title;
     public $meta_id;
     

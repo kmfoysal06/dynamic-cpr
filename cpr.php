@@ -1,6 +1,6 @@
 <?php 
 /*
-Plugin Name: Custom Post Type Register
+Plugin Name: Custom Post Type Register main
 Description: custom post and texonomy registor by kmf
 Version: 2.0
 Author: Kazi Mohammad Foysal
@@ -20,14 +20,6 @@ require_once plugin_dir_path(__FILE__)."inc/custom-post.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/custom-metaboxes.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/register-post-types-custom-metas.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/create_post.inc.php";
-require_once plugin_dir_path(__FILE__)."inc/delete-when-post-deleted.php";
-require_once plugin_dir_path(__FILE__)."inc/init-post-types.inc.php";
-
-// loading all post type register files
-$post_type_files = glob(plugin_dir_path(__FILE__) . 'inc/*.post_type.php');
-foreach ($post_type_files as $file){
-	require_once $file;
-}
 
 
 
