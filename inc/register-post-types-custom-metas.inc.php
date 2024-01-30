@@ -3,49 +3,45 @@ if(!defined('ABSPATH')){
 	exit;
 	// exit if accessed directly
 }
-// Trigger action on post save
-function kmf_dynamic_cpr_save_update_post($post_id, $post, $update) {
-if($update){
-	    // Check if the post type is 'custom_post_type'
-    if ($post->post_type === 'cpr') {
-	$post_type_info = get_post_meta($post_id,'kmf_custom_post_meta_2',true);
-	$function = '';
-	if (is_array($post_type_info) && !empty($post_type_info)) {
-	$function .= "<?php
-function kmf_dynamic_cpr_cp_".$post_id."(){
-	" ;
-		$function .= "register_post_type('".$post_type_info['cpr_id']."',
-	[
-		'labels'=>[ 'name' => __('".$post_type_info['cpr_name']."'),
-		],
-		";
-		$function .= $post_type_info['ip'] == 'on' ? "'public' => true,
-		" : "'public' => false,
-		" ;
-		$function .= ($post_type_info['su']  == 'on' || $post_type_info['ip'] == 'on' ) ? "'show_ui' => true,
-		" : "'show_ui' => false,
-		" ;
-		$function .= "'supports' => [";
-		foreach($post_type_info['supports'] as $support){
-			$function .= "'$support',";
+function kmf_cpr_createCustomPostTypes($slug='',$name='',$public=false,$showui=false, array $supports = array()){
+            register_post_type($slug,[
+                'labels' => [
+                    'name' => $name,
+                ],
+                'public' => $public,
+                'show_ui' => ($public == true || $showui),
+                'supports' => $supports,
+                    ]);
+    }
+add_action('init', "kmf_cpr_register_post_types");
+function kmf_cpr_register_post_types(){
+	$query = new WP_Query(['post_type'=>'cpr','posts_per_page'=>'-1']);
+	if($query->have_posts()){
+		while($query->have_posts()){
+			$query->the_post();
+			$post_type_info = get_post_meta(get_the_ID(),'kmf_custom_post_meta_2',true);
+			if (!empty($post_type_info)) {
+				if (isset($post_type_info['ip'])) {
+					$public = ($post_type_info['ip'] == 'on') ? true : false;
+				} else {
+					$public = false;
+				}
+				if (isset($post_type_info['su'])) {
+					$showui = ($post_type_info['su'] == 'on');
+				} else {
+					$showui = false;
+				}
+				kmf_cpr_createCustomPostTypes($post_type_info['cpr_id'],$post_type_info['cpr_name'],$public, $showui,isset($post_type_info['supports'])?$post_type_info['supports']:[]);
+			} else {
+				$public = false;
+				$showui = false;
+			}
+			
+				
+				
+			}
 		}
-		$function .= "] 
-	]);";
-
-	$function .= "	
-		}
-	add_action('init','kmf_dynamic_cpr_cp_".$post_id."');" ;
 	}
-
-    $pth = plugin_dir_path( __FILE__ ).''.$post_id.'.post_type.php';
-    $file = fopen($pth, 'w');
-    fwrite($file, $function);
-    fclose($file);
-}
-}
-}
-
-add_action('save_post', 'kmf_dynamic_cpr_save_update_post', 10, 3);
 // Hook to the post_updated_messages filter
 add_filter('post_updated_messages', 'kmf_dynamic_cpr_updated_message');
 
@@ -56,7 +52,7 @@ function kmf_dynamic_cpr_updated_message($messages) {
     if ('cpr' === get_post_type($post_ID)) {
         $messages['cpr'] = array(
             0  => '', // Unused. Messages start at index 1.
-            1  => __("Saved! If you can't see the changes on your custom post type, please try updating this post again.", 'textdomain'),
+            1  => __("Saved!", 'textdomain'),
         );
     }
 
