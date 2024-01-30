@@ -15,7 +15,6 @@ if(!defined('ABSPATH')){
 	// exit if accessed directly
 }
 
-
 require_once plugin_dir_path(__FILE__)."inc/custom-post.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/custom-metaboxes.inc.php";
 require_once plugin_dir_path(__FILE__)."inc/register-post-types-custom-metas.inc.php";
