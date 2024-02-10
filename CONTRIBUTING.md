@@ -2,6 +2,7 @@
 
 Welcome to the WP Dynamic CPR project! We appreciate your interest and contributions.
 
+
 Before you get started, please take a moment to read our [Code of Conduct](CODE_OF_CONDUCT.md). All contributors are expected to adhere to this code to foster a positive and inclusive community.
 
 ## How to Contribute
