@@ -23,7 +23,7 @@ require_once plugin_dir_path(__FILE__)."inc/create_post.inc.php";
 
 
 // including assets
-function kmf_dynamic_cpr_assets(){
+function kmfdcpr_assets(){
 	wp_enqueue_style('customstyle',plugin_dir_url(__FILE__).'assets/style.css',null,'1.0.0');
 }
-add_action("wp_enqueue_scripts",'kmf_dynamic_cpr_assets');
+add_action("wp_enqueue_scripts",'kmfdcpr_assets');

@@ -3,7 +3,7 @@ if(!defined('ABSPATH')){
 	exit;
 	// exit if accessed directly
 }
-function kmf_cpr_createCustomPostTypes($slug='',$name='',$public=false,$showui=false, array $supports = array()){
+function kmfdcpr_createCustomPostTypes($slug='',$name='',$public=false,$showui=false, array $supports = array()){
             register_post_type($slug,[
                 'labels' => [
                     'name' => $name,
@@ -13,8 +13,8 @@ function kmf_cpr_createCustomPostTypes($slug='',$name='',$public=false,$showui=f
                 'supports' => $supports,
                     ]);
     }
-add_action('init', "kmf_cpr_register_post_types");
-function kmf_cpr_register_post_types(){
+add_action('init', "kmfdcpr_register_post_types");
+function kmfdcpr_register_post_types(){
 	$query = new WP_Query(['post_type'=>'cpr','posts_per_page'=>'-1']);
 	if($query->have_posts()){
 		while($query->have_posts()){
@@ -31,7 +31,7 @@ function kmf_cpr_register_post_types(){
 				} else {
 					$showui = false;
 				}
-				kmf_cpr_createCustomPostTypes($post_type_info['cpr_id'],$post_type_info['cpr_name'],$public, $showui,isset($post_type_info['supports'])?$post_type_info['supports']:[]);
+				kmfdcpr_createCustomPostTypes($post_type_info['cpr_id'],$post_type_info['cpr_name'],$public, $showui,isset($post_type_info['supports'])?$post_type_info['supports']:[]);
 			} else {
 				$public = false;
 				$showui = false;

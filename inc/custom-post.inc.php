@@ -1,6 +1,10 @@
 <?php 
-add_action('init','kmf_dynamic_cpr_custom_post');
-function kmf_dynamic_cpr_custom_post(){
+if(!defined('ABSPATH')){
+    exit;
+    // exit if accessed directly
+}
+add_action('init','kmfdcpr_custom_post');
+function kmfdcpr_custom_post(){
 	register_post_type("cpr",[
 'labels' => [
 	'name' => __('CPR'),

@@ -3,7 +3,7 @@ if(!defined('ABSPATH')){
     exit;
     // exit if accessed directly
 }
-class KMF_Dynamic_Cpr_METS {
+class KMFDCPR_METS {
     public $name_attr;
     public $field_type;
     public $meta_slug;
@@ -29,23 +29,23 @@ class KMF_Dynamic_Cpr_METS {
     public function html(){
         wp_nonce_field(basename(__FILE__), 'kmf_meta_nonce');
       echo '
-<div class="kmf-cpr-field pt">
-            <p>Post Type ID</p>
-            <input type="text" id="pt" name="'.esc_attr($this->meta_slug_og).'[cpr_id]" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_id')).'">
+<div class="'.esc_attr( "kmf-cpr-field pt" ).'">
+            <p>'.esc_html( "Post Type ID" ).'</p>
+            <input type="'.esc_attr( "text" ).'" id="'.esc_attr( "pt" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_id]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_id')).'">
         </div>
 
-        <div class="kmf-cpr-field name">
-            <p>Post Type Name</p>
-            <input type="text" id="name" name="'.esc_attr($this->meta_slug_og).'[cpr_name]" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_name')).'">
+        <div class="'.esc_attr( "kmf-cpr-field name" ).'">
+            <p>'.esc_html( "Post Type Name" ).'</p>
+            <input type="'.esc_attr( "text" ).'" id="'.esc_html( "name" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_name]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_name')).'">
         </div>
 
-        <div class="kmf-cpr-field ip">
-            <p>Is Public</p>
-            <input type="checkbox" id="ip" name="'.esc_attr($this->meta_slug_og).'[ip]" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','ip')).'>
+        <div class="'.esc_attr( "kmf-cpr-field ip" ).'">
+            <p>'.esc_html("Is Public").'</p>
+            <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "ip" ).'" name="'.esc_attr($this->meta_slug_og.'[ip]').'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','ip')).'>
         </div>
 
-        <div class="kmf-cpr-field su">
-            <p>Show UI</p>
+        <div class="'.esc_attr( "kmf-cpr-field su" ).'">
+            <p>'.esc_html( "Show UI" ).'</p>
             <input type="checkbox" id="su" name="'.esc_attr($this->meta_slug_og).'[su]" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','su')).'>
         </div>
 
@@ -156,12 +156,12 @@ class KMF_Dynamic_Cpr_METS {
     }
         }
 // new METS('kmf-name','text','kmf-meta');
-if(class_exists('KMF_Dynamic_Cpr_METS')){
+if(class_exists('KMFDCPR_METS')){
     // Set a unique prefix for the metabox
-  $slug = 'kmf_custom_post_meta_2';
+  $slug = 'kmfdcpr_meta_2';
 
   // Create a metabox
-  KMF_Dynamic_Cpr_METS::createMetabox($slug, [
+  KMFDCPR_METS::createMetabox($slug, [
     'title'     => 'Register Post Type',
     'field' => 'html',
     'name' => 'kmf-name'

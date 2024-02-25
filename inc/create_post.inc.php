@@ -3,7 +3,7 @@ if(!defined('ABSPATH')){
     exit;
     // exit if accessed directly
 }
-function kmf_dynamic_cpr_create_post(){
+function kmfdcpr_post(){
     if(post_type_exists('cpr')){
     // Check if there are any posts of your custom post type
     $existing_posts = get_posts(['post_type' => 'cpr', 'posts_per_page' => -1]);
@@ -24,4 +24,4 @@ function kmf_dynamic_cpr_create_post(){
     }
 }
 
-add_action('init','kmf_dynamic_cpr_create_post');
+add_action('init','kmfdcpr_post');
