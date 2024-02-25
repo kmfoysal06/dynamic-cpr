@@ -49,23 +49,22 @@ class KMFDCPR_METS {
             <input type="checkbox" id="su" name="'.esc_attr($this->meta_slug_og).'[su]" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','su')).'>
         </div>
 
-        <div class="kmf-cpr-field sup">
-                <p>Supports</p>
-                <div class="inputs">
-                <input type="checkbox" id="meta-title" name="'.esc_attr($this->meta_slug_og).'[supports][]" value="title" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','title')).'>
-                <label for="meta-title">'.esc_html('Title').'</label>
+        <div class="'.esc_attr( "kmf-cpr-field sup" ).'">
+                <p>'.esc_html( "Supports" ).'</p>
+                <div class="'.esc_attr( "inputs" ).'">
+                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "meta-title" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "title" ).'" ' .esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','title')).'>
+                <label for="'.esc_attr( "meta-title" ).'">'.esc_html('Title').'</label>
 
-                <input type="checkbox" id="thumbnail" name="'.esc_attr($this->meta_slug_og).'[supports][]" value="thumbnail" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','thumbnail')).'>
-                <label for="thumbnail">'.esc_html('Thumbnail').'</label>
+   .            <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "thumbnail" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="thumbnail" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','thumbnail')).'>
+                <label for="'.esc_attr( "thumbnail" ).'">'.esc_html('Thumbnail').'</label>
 
-                <input type="checkbox" id="editor" name="'.esc_attr($this->meta_slug_og).'[supports][]" value="editor" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','editor')).'>
-                <label for="editor">'.esc_html('Editor').'</label>
+                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "editor" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "editor" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','editor')).'>
+                <label for="'.esc_attr( "editor" ).'">'.esc_html('Editor').'</label>
 
-                <input type="checkbox" id="comments" name="'.esc_attr($this->meta_slug_og).'[supports][]" value="comments" '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','comments').'>
-                <label for="comments">'.esc_html('Comments').'</label>
+                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "comments" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "comments" ).'" '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','comments').'>
+                <label for="'.esc_attr( "comments" ).'">'.esc_html('Comments').'</label>
 
-                <input type="checkbox" id="page-attributes" name="'.esc_attr($this->meta_slug_og).'[supports][]" value="page-attributes"  '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','page-attributes')).'>
-                <label for="page-attributes">'.esc_html('Page Attributes').'</label>
+                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "page-attributes" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "page-attributes" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','page-attributes')).'<label for="'.esc_attr( "page-attributes" ).'">'.esc_html('Page Attributes').'</label>
                 </div>
         </div>';
 }
@@ -158,7 +157,7 @@ class KMFDCPR_METS {
 // new METS('kmf-name','text','kmf-meta');
 if(class_exists('KMFDCPR_METS')){
     // Set a unique prefix for the metabox
-  $slug = 'kmfdcpr_meta_2';
+  $slug = 'kmf-cpr-meta-2';
 
   // Create a metabox
   KMFDCPR_METS::createMetabox($slug, [

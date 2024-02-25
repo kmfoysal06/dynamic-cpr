@@ -43,9 +43,9 @@ function kmfdcpr_register_post_types(){
 		}
 	}
 // Hook to the post_updated_messages filter
-add_filter('post_updated_messages', 'kmf_dynamic_cpr_updated_message');
+add_filter('post_updated_messages', 'kmfdcpr_updated_message');
 
-function kmf_dynamic_cpr_updated_message($messages) {
+function kmfdcpr_updated_message($messages) {
     global $post, $post_ID;
 
     // Check if the post type is 'cpr'
