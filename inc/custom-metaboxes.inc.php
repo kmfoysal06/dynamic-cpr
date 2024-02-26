@@ -4,31 +4,18 @@ if(!defined('ABSPATH')){
     // exit if accessed directly
 }
 class KMFDCPR_METS {
-    public $name_attr;
-    public $field_type;
     public $meta_slug;
     public $meta_slug_og;
     public $meta_title;
     public $meta_id;
     
-    public function init_field($field){
-        switch ($field) {
-            case 'text':
-                return 'textField';
-                break;
-            
-            default:
-                return 'html';
-                break;
-        }
-
-    }
     public function create_metabox() {
-        add_meta_box('kmfdcpr_meta', $this->meta_title, [$this, $this->field_type], 'cpr');
+        add_meta_box('kmfdcpr_meta', $this->meta_title, [$this, 'metabox_html'], 'cpr');
     }
-    public function html(){
+    public function metabox_html(){
         wp_nonce_field(basename(__FILE__), 'kmfdcpr_meta_nonce');
       echo '
+        <p><b>'.esc_html( "post type id and name must be unique and only contain alphanumeric characters and underscores and length should be less than 20" ).'</b></p>
         <div class="'.esc_attr( "kmfdcpr-field pt" ).'">
             <p>'.esc_html( "Post Type ID" ).'</p>
             <input type="'.esc_attr( "text" ).'" id="'.esc_attr( "pt" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_id]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_id')).'" '.esc_html( "required" ).'>
@@ -82,7 +69,9 @@ class KMFDCPR_METS {
         }
         // Verify nonce.
         if (!wp_verify_nonce(sanitize_text_field($_POST['kmfdcpr_meta_nonce']), basename(__FILE__))) {
-            return;
+            // return;
+            wp_die( "Please fill up the required fields");
+
         }
         // Check if this is an autosave.
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
@@ -96,6 +85,10 @@ class KMFDCPR_METS {
         }
         //Check if the input is not empty
         if(empty($_POST[$this->meta_slug_og]['cpr_id']) || empty($_POST[$this->meta_slug_og]['cpr_name'])){
+            return;
+        }
+        //check post id and name length and allowed character
+        if(strlen($_POST[$this->meta_slug_og]['cpr_id']) > 20 || strlen($_POST[$this->meta_slug_og]['cpr_name']) > 20 || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST[$this->meta_slug_og]['cpr_id']) || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST[$this->meta_slug_og]['cpr_name'])){
             return;
         }
 
@@ -153,8 +146,6 @@ class KMFDCPR_METS {
         $instance = new self();
         $instance->meta_slug = $slug.'[]';
         $instance->meta_slug_og = $slug;
-        $instance->name_attr = $data['name'];
-        $instance->field_type = $instance->init_field($data['field']);
         $instance->meta_title = $data['title'] ;
         add_action("add_meta_boxes", [$instance,'create_metabox']);
         add_action("save_post", [$instance,'save_metabox']);
@@ -168,8 +159,6 @@ if(class_exists('KMFDCPR_METS')){
   // Create a metabox
   KMFDCPR_METS::createMetabox($slug, [
     'title'     => 'Register Post Type',
-    'field' => 'html',
-    'name' => 'kmf-name'
   ] );
 
 }
