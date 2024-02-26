@@ -3,7 +3,9 @@ if(!defined('ABSPATH')){
     exit;
     // exit if accessed directly
 }
-add_action('init','kmfdcpr_custom_post');
+if(function_exists('kmfdcpr_custom_post')){
+	add_action('init', 'kmfdcpr_custom_post');
+}
 function kmfdcpr_custom_post(){
 	register_post_type("cpr",[
 'labels' => [

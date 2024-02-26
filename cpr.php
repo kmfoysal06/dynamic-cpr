@@ -5,7 +5,6 @@ Description: custom post and texonomy registor by kmf
 Version: 2.0
 Author: Kazi Mohammad Foysal
 Author URI: https://www.github.com/kmfoysal06
-Text Domain: dynamic-cpr
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */

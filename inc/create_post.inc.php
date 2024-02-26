@@ -24,4 +24,6 @@ function kmfdcpr_post(){
     }
 }
 
-add_action('init','kmfdcpr_post');
+if(function_exists('kmfdcpr_post')){
+    add_action('init', 'kmfdcpr_post');
+}

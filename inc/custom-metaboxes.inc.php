@@ -24,38 +24,39 @@ class KMFDCPR_METS {
 
     }
     public function create_metabox() {
-        add_meta_box('kmf_meta', $this->meta_title, [$this, $this->field_type], 'cpr');
+        add_meta_box('kmfdcpr_meta', $this->meta_title, [$this, $this->field_type], 'cpr');
     }
     public function html(){
-        wp_nonce_field(basename(__FILE__), 'kmf_meta_nonce');
+        wp_nonce_field(basename(__FILE__), 'kmfdcpr_meta_nonce');
       echo '
-<div class="'.esc_attr( "kmf-cpr-field pt" ).'">
+        <div class="'.esc_attr( "kmfdcpr-field pt" ).'">
             <p>'.esc_html( "Post Type ID" ).'</p>
-            <input type="'.esc_attr( "text" ).'" id="'.esc_attr( "pt" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_id]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_id')).'">
+            <input type="'.esc_attr( "text" ).'" id="'.esc_attr( "pt" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_id]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_id')).'" '.esc_html( "required" ).'>
         </div>
 
-        <div class="'.esc_attr( "kmf-cpr-field name" ).'">
+        <div class="'.esc_attr( "kmfdcpr-field name" ).'">
             <p>'.esc_html( "Post Type Name" ).'</p>
-            <input type="'.esc_attr( "text" ).'" id="'.esc_html( "name" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_name]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_name')).'">
+            <input type="'.esc_attr( "text" ).'" id="'.esc_html( "name" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_name]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_name')).'" '.esc_html( "required" ).'>
         </div>
 
-        <div class="'.esc_attr( "kmf-cpr-field ip" ).'">
+        <div class="'.esc_attr( "kmfdcpr-field ip" ).'">
             <p>'.esc_html("Is Public").'</p>
             <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "ip" ).'" name="'.esc_attr($this->meta_slug_og.'[ip]').'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','ip')).'>
+            <label for="'.esc_attr( "ip" ).'">'.esc_html('Is Public').'</label>
         </div>
 
-        <div class="'.esc_attr( "kmf-cpr-field su" ).'">
-            <p>'.esc_html( "Show UI" ).'</p>
-            <input type="checkbox" id="su" name="'.esc_attr($this->meta_slug_og).'[su]" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','su')).'>
+        <div class="'.esc_attr( "kmfdcpr-field su" ).'">
+            <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "su" ).'" name="'.esc_attr($this->meta_slug_og.'[su]').'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','su')).'>
+            <label for="'.esc_attr( "su" ).'">'.esc_html('Show UI').'</label>
         </div>
 
-        <div class="'.esc_attr( "kmf-cpr-field sup" ).'">
+        <div class="'.esc_attr( "kmfdcpr-field sup" ).'">
                 <p>'.esc_html( "Supports" ).'</p>
                 <div class="'.esc_attr( "inputs" ).'">
                 <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "meta-title" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "title" ).'" ' .esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','title')).'>
                 <label for="'.esc_attr( "meta-title" ).'">'.esc_html('Title').'</label>
 
-   .            <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "thumbnail" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="thumbnail" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','thumbnail')).'>
+               <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "thumbnail" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="thumbnail" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','thumbnail')).'>
                 <label for="'.esc_attr( "thumbnail" ).'">'.esc_html('Thumbnail').'</label>
 
                 <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "editor" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "editor" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','editor')).'>
@@ -76,11 +77,11 @@ class KMFDCPR_METS {
             }
         $this->meta_id = $post_id;
         // Check if nonce is set.
-        if (!isset($_POST['kmf_meta_nonce'])) {
+        if (!isset($_POST['kmfdcpr_meta_nonce'])) {
             return;
         }
         // Verify nonce.
-        if (!wp_verify_nonce(sanitize_text_field($_POST['kmf_meta_nonce']), basename(__FILE__))) {
+        if (!wp_verify_nonce(sanitize_text_field($_POST['kmfdcpr_meta_nonce']), basename(__FILE__))) {
             return;
         }
         // Check if this is an autosave.
@@ -93,6 +94,12 @@ class KMFDCPR_METS {
                 return;
             }
         }
+        //Check if the input is not empty
+        if(empty($_POST[$this->meta_slug_og]['cpr_id']) || empty($_POST[$this->meta_slug_og]['cpr_name'])){
+            return;
+        }
+
+        
         update_post_meta($post_id,$this->meta_slug_og, $this->sanitize_array($_POST[$this->meta_slug_og]));
     }
 
@@ -125,7 +132,7 @@ class KMFDCPR_METS {
                         return array_key_exists($data_key, $data) ? (is_array($data[$data_key]) && in_array($neddle_for_multiselect, $data[$data_key]) ? 'checked': '') : '';
                         break;
                         default:
-                        return 'this is a default text.you might added something that not set by us.try text,select and multi_select as $type paramiter';
+                            return '';
                         break;
                          }
                 }
@@ -154,10 +161,9 @@ class KMFDCPR_METS {
 
     }
         }
-// new METS('kmf-name','text','kmf-meta');
 if(class_exists('KMFDCPR_METS')){
     // Set a unique prefix for the metabox
-  $slug = 'kmf-cpr-meta-2';
+  $slug = 'kmfcpr_metadata';
 
   // Create a metabox
   KMFDCPR_METS::createMetabox($slug, [
