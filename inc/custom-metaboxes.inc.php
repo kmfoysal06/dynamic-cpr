@@ -18,12 +18,12 @@ class KMFDCPR_METS {
         <p><b>'.esc_html( "post type id and name must be unique and only contain alphanumeric characters and underscores and length should be less than 20" ).'</b></p>
         <div class="'.esc_attr( "kmfdcpr-field pt" ).'">
             <p>'.esc_html( "Post Type ID" ).'</p>
-            <input type="'.esc_attr( "text" ).'" id="'.esc_attr( "pt" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_id]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_id')).'" '.esc_html( "required" ).'>
+            <input type="'.esc_attr( "text" ).'" id="'.esc_attr( "pt" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_id]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_id')).'" '.esc_attr( "required" ).'>
         </div>
 
         <div class="'.esc_attr( "kmfdcpr-field name" ).'">
             <p>'.esc_html( "Post Type Name" ).'</p>
-            <input type="'.esc_attr( "text" ).'" id="'.esc_html( "name" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_name]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_name')).'" '.esc_html( "required" ).'>
+            <input type="'.esc_attr( "text" ).'" id="'.esc_html( "name" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_name]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_name')).'" '.esc_attr( "required" ).'>
         </div>
 
         <div class="'.esc_attr( "kmfdcpr-field ip" ).'">
@@ -43,13 +43,13 @@ class KMFDCPR_METS {
                 <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "meta-title" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "title" ).'" ' .esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','title')).'>
                 <label for="'.esc_attr( "meta-title" ).'">'.esc_html('Title').'</label>
 
-               <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "thumbnail" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="thumbnail" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','thumbnail')).'>
+               <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "thumbnail" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "thumbnail" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','thumbnail')).'>
                 <label for="'.esc_attr( "thumbnail" ).'">'.esc_html('Thumbnail').'</label>
 
                 <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "editor" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "editor" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','editor')).'>
                 <label for="'.esc_attr( "editor" ).'">'.esc_html('Editor').'</label>
 
-                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "comments" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "comments" ).'" '.$this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','comments').'>
+                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "comments" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "comments" ).'" '.esc_attr( $this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','comments')).'>
                 <label for="'.esc_attr( "comments" ).'">'.esc_html('Comments').'</label>
 
                 <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "page-attributes" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "page-attributes" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','page-attributes')).'<label for="'.esc_attr( "page-attributes" ).'">'.esc_html('Page Attributes').'</label>

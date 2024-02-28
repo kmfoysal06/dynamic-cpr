@@ -1,8 +1,8 @@
 <?php 
 /*
 Plugin Name: Custom Post Type Register main
-Description: custom post and texonomy registor by kmf
-Version: 2.0
+Description: Simple and lightweight custom post type registrar by kmf.
+Version: 2.2
 Author: Kazi Mohammad Foysal
 Author URI: https://www.github.com/kmfoysal06
 License: GPLv2
