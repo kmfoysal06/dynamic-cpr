@@ -81,11 +81,15 @@ class KMFDCPR_METS {
         // Check permissions.
         $post_type = isset($_POST['post_type']) ? sanitize_text_field($_POST['post_type']) : '';
 
-        if ('post' === $post_type) {
+        if ('cpr' === $post_type) {
+            // Your code specific to the 'cpr' post type goes here
             if (!current_user_can('edit_post', $post_id)) {
                 return;
             }
+        }else{
+            return;
         }
+
         
         //Check if the input is not empty
         $cpr_id = isset($_POST[$this->meta_slug_og]['cpr_id']) ? sanitize_key($_POST[$this->meta_slug_og]['cpr_id']) : '';
@@ -157,17 +161,9 @@ class KMFDCPR_METS {
             }
         } 
 
-
-
-
-
-
-
-
-
-    public static function createMetabox(string $slug,array $data){
-        global $post;
-        if(empty($slug) || empty($data)){
+    public static function createMetabox(string $slug,array $data,$post_type){
+        // global $post;
+        if(empty($slug) || empty($data) || $post_type !== 'cpr'){
             return;
         }
         $instance = new self();
@@ -182,10 +178,10 @@ class KMFDCPR_METS {
 if(class_exists('KMFDCPR_METS')){
     // Set a unique prefix for the metabox
   $slug = 'kmfcpr_metadata';
-
+  global $post;
   // Create a metabox
   KMFDCPR_METS::createMetabox($slug, [
     'title'     => 'Register Post Type',
-  ] );
+  ],$post->post_type);
 
 }
