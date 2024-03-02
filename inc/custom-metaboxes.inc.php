@@ -64,32 +64,45 @@ class KMFDCPR_METS {
             }
         $this->meta_id = $post_id;
         // Check if nonce is set.
-        if (!isset($_POST['kmfdcpr_meta_nonce'])) {
+        $kmfdcpr_meta_nonce = isset($_POST['kmfdcpr_meta_nonce']) ? sanitize_text_field($_POST['kmfdcpr_meta_nonce']) : '';
+
+        if (!isset($kmfdcpr_meta_nonce)) {
             return;
         }
         // Verify nonce.
-        if (!wp_verify_nonce(sanitize_text_field($_POST['kmfdcpr_meta_nonce']), basename(__FILE__))) {
-            // return;
-            wp_die( "Please fill up the required fields");
-
+        if (!isset($_POST['kmfdcpr_meta_nonce']) || !wp_verify_nonce(sanitize_text_field($_POST['kmfdcpr_meta_nonce']), basename(__FILE__))) {
+            wp_die("Please fill up the required fields");
         }
+        
         // Check if this is an autosave.
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
         }
         // Check permissions.
-        if ('post' === $_POST['post_type']) {
+        $post_type = isset($_POST['post_type']) ? sanitize_text_field($_POST['post_type']) : '';
+
+        if ('post' === $post_type) {
             if (!current_user_can('edit_post', $post_id)) {
                 return;
             }
         }
+        
         //Check if the input is not empty
-        if(empty($_POST[$this->meta_slug_og]['cpr_id']) || empty($_POST[$this->meta_slug_og]['cpr_name'])){
+        $cpr_id = isset($_POST[$this->meta_slug_og]['cpr_id']) ? sanitize_key($_POST[$this->meta_slug_og]['cpr_id']) : '';
+        $cpr_name = isset($_POST[$this->meta_slug_og]['cpr_name']) ? sanitize_text_field($_POST[$this->meta_slug_og]['cpr_name']) : '';
+
+        // Check if ID and name are not empty and adhere to criteria
+        if (empty($cpr_id) || empty($cpr_name) || strlen($cpr_id) > 20 || strlen($cpr_name) > 20 || !preg_match('/^[a-zA-Z0-9_]+$/', $cpr_id) || !preg_match('/^[a-zA-Z0-9_]+$/', $cpr_name)) {
             return;
         }
-        //check post id and name length and allowed character
-        if(strlen($_POST[$this->meta_slug_og]['cpr_id']) > 20 || strlen($_POST[$this->meta_slug_og]['cpr_name']) > 20 || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST[$this->meta_slug_og]['cpr_id']) || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST[$this->meta_slug_og]['cpr_name'])){
-            return;
+
+        // Check for uniqueness of ID
+        global $wpdb;
+
+        $existing_ids = $wpdb->get_col($wpdb->prepare("SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '%s'", $cpr_id));
+
+        if (in_array($cpr_id, $existing_ids)) {
+            return; // ID or name already exists, return to avoid duplicate
         }
 
         
@@ -97,6 +110,11 @@ class KMFDCPR_METS {
     }
 
     public function get_the_saved_value($id,$slug,$type,$key,$needle=false){
+        $id = absint($id); // Ensure $id is an integer
+        $slug = sanitize_key($slug); // Ensure $slug contains only alphanumeric characters and underscores
+        $type = sanitize_text_field($type); // Ensure $type is a string
+        $key = sanitize_key($key); // Ensure $key contains only alphanumeric characters and underscores
+
         $dbs = get_post_meta($id,$slug,true);
         return sanitize_text_field($this->sanitize_data($dbs,$key,$type,$needle));
     }
@@ -138,6 +156,15 @@ class KMFDCPR_METS {
                 return is_scalar($input_array) ? sanitize_text_field($input_array) : $input_array ;
             }
         } 
+
+
+
+
+
+
+
+
+
     public static function createMetabox(string $slug,array $data){
         global $post;
         if(empty($slug) || empty($data)){
