@@ -15,19 +15,18 @@ class KMFDCPR_METS {
     public function metabox_html(){
         wp_nonce_field(basename(__FILE__), 'kmfdcpr_meta_nonce');
       echo '
-        <p><b>'.esc_html( "post type id and name must be unique and only contain alphanumeric characters and underscores and length should be less than 20" ).'</b></p>
-        <div class="'.esc_attr( "kmfdcpr-field pt" ).'">
-            <p>'.esc_html( "Post Type ID" ).'</p>
+            <p><b>'.esc_html( "post type id and name must be unique and only contain alphanumeric characters and underscores and length should be less than 20" ).'</b></p>
+            <div class="'.esc_attr( "kmfdcpr-field pt" ).'">
+            <label for="'.esc_attr( "pt" ).'">'.esc_html('Post Type ID').'</label>
             <input type="'.esc_attr( "text" ).'" id="'.esc_attr( "pt" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_id]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_id')).'" '.esc_attr( "required" ).'>
         </div>
 
         <div class="'.esc_attr( "kmfdcpr-field name" ).'">
-            <p>'.esc_html( "Post Type Name" ).'</p>
+            <label for="'.esc_attr( "name" ).'">'.esc_html('Post Type Name').'</label>
             <input type="'.esc_attr( "text" ).'" id="'.esc_html( "name" ).'" name="'.esc_attr($this->meta_slug_og.'[cpr_name]').'" value="'.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'text','cpr_name')).'" '.esc_attr( "required" ).'>
         </div>
 
         <div class="'.esc_attr( "kmfdcpr-field ip" ).'">
-            <p>'.esc_html("Is Public").'</p>
             <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "ip" ).'" name="'.esc_attr($this->meta_slug_og.'[ip]').'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'select','ip')).'>
             <label for="'.esc_attr( "ip" ).'">'.esc_html('Is Public').'</label>
         </div>
@@ -38,7 +37,7 @@ class KMFDCPR_METS {
         </div>
 
         <div class="'.esc_attr( "kmfdcpr-field sup" ).'">
-                <p>'.esc_html( "Supports" ).'</p>
+                <p><span title="'.esc_attr( "If you don't select anything, the default supports (title and editor) will be added." ).'">'.esc_html( "Supports" ).'</span></p>
                 <div class="'.esc_attr( "inputs" ).'">
                 <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "meta-title" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "title" ).'" ' .esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','title')).'>
                 <label for="'.esc_attr( "meta-title" ).'">'.esc_html('Title').'</label>
@@ -52,13 +51,23 @@ class KMFDCPR_METS {
                 <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "comments" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "comments" ).'" '.esc_attr( $this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','comments')).'>
                 <label for="'.esc_attr( "comments" ).'">'.esc_html('Comments').'</label>
 
-                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "page-attributes" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "page-attributes" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','page-attributes')).'<label for="'.esc_attr( "page-attributes" ).'">'.esc_html('Page Attributes').'</label>
+                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "page-attributes" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "page-attributes" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','page-attributes')).'>
+                <label for="'.esc_attr( "page-attributes" ).'">'.esc_html('Page Attributes').'</label>
                 </div>
         </div>';
 }
 
 
-    public function save_metabox($post_id) {
+    public function save_metabox($post_id,$post,$update) {
+        if (isset($_REQUEST['action']) && ($_REQUEST['action'] === 'delete' || $_REQUEST['action'] === 'trash')) {
+            return;
+        }
+        //this is only for cpr so checking is the post type is cpr
+        if ( 'cpr' !== $post->post_type ) {
+            return;
+        }
+
+
          if (wp_is_post_revision($post_id) || defined('DOING_AUTOSAVE') && DOING_AUTOSAVE || wp_is_post_autosave($post_id) ){
             return;
             }
@@ -79,14 +88,7 @@ class KMFDCPR_METS {
             return;
         }
         // Check permissions.
-        $post_type = isset($_POST['post_type']) ? sanitize_text_field($_POST['post_type']) : '';
-
-        if ('cpr' === $post_type) {
-            // Your code specific to the 'cpr' post type goes here
-            if (!current_user_can('edit_post', $post_id)) {
-                return;
-            }
-        }else{
+        if (!current_user_can('edit_post', $post_id)) {
             return;
         }
 
@@ -161,27 +163,24 @@ class KMFDCPR_METS {
             }
         } 
 
-    public static function createMetabox(string $slug,array $data,$post_type){
-        // global $post;
-        if(empty($slug) || empty($data) || $post_type !== 'cpr'){
+    public static function createMetabox(string $slug,array $data){
+        if(empty($slug) || empty($data)){
             return;
         }
         $instance = new self();
         $instance->meta_slug = $slug.'[]';
         $instance->meta_slug_og = $slug;
         $instance->meta_title = $data['title'] ;
-        add_action("add_meta_boxes", [$instance,'create_metabox']);
-        add_action("save_post", [$instance,'save_metabox']);
-
+        add_action("add_meta_boxes", [$instance,'create_metabox'],10,1);
+        add_action("save_post", [$instance,'save_metabox'],10,3);
     }
         }
 if(class_exists('KMFDCPR_METS')){
-    // Set a unique prefix for the metabox
+  // Set a unique prefix for the metabox
   $slug = 'kmfcpr_metadata';
-  global $post;
   // Create a metabox
   KMFDCPR_METS::createMetabox($slug, [
     'title'     => 'Register Post Type',
-  ],$post->post_type);
+  ]);
 
 }

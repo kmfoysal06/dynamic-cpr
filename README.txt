@@ -8,7 +8,7 @@ Requires PHP: 7.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Simple and lightweight custom post type registrar by kmf.
+Simple and lightweight plugin for creating and managing custom post types in WordPress.
 
 === Description ==
 
