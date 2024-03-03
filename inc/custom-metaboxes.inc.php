@@ -59,11 +59,8 @@ class KMFDCPR_METS {
 
 
     public function save_metabox($post_id,$post,$update) {
-        if (isset($_REQUEST['action']) && ($_REQUEST['action'] === 'delete' || $_REQUEST['action'] === 'trash')) {
-            return;
-        }
         //this is only for cpr so checking is the post type is cpr
-        if ( 'cpr' !== $post->post_type ) {
+        if (($post === null) && 'cpr' !== $post->post_type ) {
             return;
         }
 
@@ -77,10 +74,6 @@ class KMFDCPR_METS {
 
         if (!isset($kmfdcpr_meta_nonce)) {
             return;
-        }
-        // Verify nonce.
-        if (!isset($_POST['kmfdcpr_meta_nonce']) || !wp_verify_nonce(sanitize_text_field($_POST['kmfdcpr_meta_nonce']), basename(__FILE__))) {
-            wp_die("Please fill up the required fields");
         }
         
         // Check if this is an autosave.
