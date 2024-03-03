@@ -58,55 +58,45 @@ class KMFDCPR_METS {
 }
 
 
-    public function save_metabox($post_id,$post,$update) {
-        //this is only for cpr so checking is the post type is cpr
-        if (($post === null) && 'cpr' !== $post->post_type ) {
-            return;
-        }
-
-
-         if (wp_is_post_revision($post_id) || defined('DOING_AUTOSAVE') && DOING_AUTOSAVE || wp_is_post_autosave($post_id) ){
-            return;
-            }
-        $this->meta_id = $post_id;
-        // Check if nonce is set.
-        $kmfdcpr_meta_nonce = isset($_POST['kmfdcpr_meta_nonce']) ? sanitize_text_field($_POST['kmfdcpr_meta_nonce']) : '';
-
-        if (!isset($kmfdcpr_meta_nonce)) {
-            return;
-        }
-        
-        // Check if this is an autosave.
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return;
-        }
-        // Check permissions.
-        if (!current_user_can('edit_post', $post_id)) {
-            return;
-        }
-
-        
-        //Check if the input is not empty
-        $cpr_id = isset($_POST[$this->meta_slug_og]['cpr_id']) ? sanitize_key($_POST[$this->meta_slug_og]['cpr_id']) : '';
-        $cpr_name = isset($_POST[$this->meta_slug_og]['cpr_name']) ? sanitize_text_field($_POST[$this->meta_slug_og]['cpr_name']) : '';
-
-        // Check if ID and name are not empty and adhere to criteria
-        if (empty($cpr_id) || empty($cpr_name) || strlen($cpr_id) > 20 || strlen($cpr_name) > 20 || !preg_match('/^[a-zA-Z0-9_]+$/', $cpr_id) || !preg_match('/^[a-zA-Z0-9_]+$/', $cpr_name)) {
-            return;
-        }
-
-        // Check for uniqueness of ID
-        global $wpdb;
-
-        $existing_ids = $wpdb->get_col($wpdb->prepare("SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '%s'", $cpr_id));
-
-        if (in_array($cpr_id, $existing_ids)) {
-            return; // ID or name already exists, return to avoid duplicate
-        }
-
-        
-        update_post_meta($post_id,$this->meta_slug_og, $this->sanitize_array($_POST[$this->meta_slug_og]));
+public function save_metabox($post_id, $post, $update) {
+    // Check if this is a valid post object and the post type is 'cpr'
+    if (!($post instanceof WP_Post) || 'cpr' !== $post->post_type) {
+        return;
     }
+
+    // Nonce verification
+    $kmfdcpr_meta_nonce = isset($_POST['kmfdcpr_meta_nonce']) ? sanitize_text_field($_POST['kmfdcpr_meta_nonce']) : '';
+    if (!wp_verify_nonce($kmfdcpr_meta_nonce, basename(__FILE__))) {
+        return;
+    }
+
+    // Avoid autosave and revision issues
+    if (wp_is_post_revision($post_id) || defined('DOING_AUTOSAVE') && DOING_AUTOSAVE || wp_is_post_autosave($post_id)) {
+        return;
+    }
+
+    // Check permissions
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Sanitize and validate input data
+    $cpr_id = isset($_POST[$this->meta_slug_og]['cpr_id']) ? sanitize_key($_POST[$this->meta_slug_og]['cpr_id']) : '';
+    $cpr_name = isset($_POST[$this->meta_slug_og]['cpr_name']) ? sanitize_text_field($_POST[$this->meta_slug_og]['cpr_name']) : '';
+
+    if (empty($cpr_id) || empty($cpr_name) || strlen($cpr_id) > 20 || strlen($cpr_name) > 20 || !preg_match('/^[a-zA-Z0-9_]+$/', $cpr_id) || !preg_match('/^[a-zA-Z0-9_]+$/', $cpr_name)) {
+        return;
+    }
+
+    // Check for uniqueness of ID using WordPress API
+    $existing_ids = get_metadata('post', $post_id, $cpr_id, true);
+    if ($existing_ids) {
+        return; // ID or name already exists, return to avoid duplicate
+    }
+
+    // Update post meta
+    update_post_meta($post_id, $this->meta_slug_og, $this->sanitize_array($_POST[$this->meta_slug_og]));
+}
 
     public function get_the_saved_value($id,$slug,$type,$key,$needle=false){
         $id = absint($id); // Ensure $id is an integer
