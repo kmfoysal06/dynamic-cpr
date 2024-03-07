@@ -4,6 +4,8 @@
 
 The Custom Post Type Manager plugin allows users to easily add and manage custom post types on their WordPress site. It provides a user-friendly interface for creating and configuring custom post types without the need for coding skills.
 
+
+
 ## Features
 
 - **Dynamic Custom Post Types:** Create custom post types with ease.
@@ -64,3 +66,8 @@ If you'd like to contribute to the development of this plugin, please follow the
 ## License
 
 This plugin is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
+## Wordpress Plugin Directory
+
+This Plugin Is Now On Wordpress Plugin Directory 😄.Go Check It Out [https://wordpress.org/plugins/dynamic-cpr] (dynamic-cpr).
