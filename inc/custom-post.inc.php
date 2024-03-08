@@ -14,7 +14,7 @@ function kmfdcpr_custom_post(){
 'public' => false,
 'show_ui' => true,
 'capability_type' => 'post',
-'capabilities' => [ 'create_posts' => true, ],
+'capabilities' => [ 'create_posts' => 'manage_options', ],
 'map_meta_cap' => true,
 'menu_icon' => 'dashicons-welcome-add-page',
 'supports' => ['title'],

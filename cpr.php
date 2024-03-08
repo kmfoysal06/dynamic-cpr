@@ -1,6 +1,6 @@
 <?php 
 /*
-Plugin Name: Dynamic CPR main
+Plugin Name: Dynamic CPR
 Description: Simple and lightweight plugin for creating and managing custom post types in WordPress.
 Version: 2.2
 Author: Kazi Mohammad Foysal

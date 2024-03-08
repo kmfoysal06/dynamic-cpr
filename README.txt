@@ -15,7 +15,7 @@ Simple and lightweight plugin for creating and managing custom post types in Wor
 The Dynamic Custom Post Type Register (Dynamic CPR) plugin allows users to easily add and manage custom post types on their WordPress site. It provides a simple UI for creating and configuring custom post types without the need for coding skills.
 
 === Installation ===
-1. Upload the `dynamic cpr` to the `/wp-content/plugins/` directory.
+1. Upload the `dynamic-cpr` Folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 2. Visit CPR from Admin Dashboard and add post types via creating new posts.
 
