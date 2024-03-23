@@ -1,4 +1,10 @@
 <?php 
+/**
+ * Create a custom post type
+ *
+ * @package dynamic-cpr
+ * @since 1.0
+ */
 if(!defined('ABSPATH')){
     exit;
     // exit if accessed directly

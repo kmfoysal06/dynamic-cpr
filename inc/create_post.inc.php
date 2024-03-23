@@ -1,4 +1,10 @@
 <?php
+/**
+ * Create a new post of the custom post type if no posts exist
+ *
+ * @package dynamic-cpr
+ */
+
 if(!defined('ABSPATH')){
     exit;
     // exit if accessed directly

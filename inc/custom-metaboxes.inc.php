@@ -1,4 +1,10 @@
 <?php
+/**
+ * Create a new post of the custom post type if no posts exist
+ *
+ * @package dynamic-cpr
+ * @since 1.0
+*/
 if(!defined('ABSPATH')){
     exit;
     // exit if accessed directly
@@ -50,6 +56,17 @@ class KMFDCPR_METS {
 
                 <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "comments" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "comments" ).'" '.esc_attr( $this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','comments')).'>
                 <label for="'.esc_attr( "comments" ).'">'.esc_html('Comments').'</label>
+
+                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "custom-fields" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "custom-fields" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','custom-fields')).'>
+                <label for="'.esc_attr( "custom-fields" ).'">'.esc_html('Custom Fields').'</label>
+
+
+                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "author" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "author" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','author')).'>
+                <label for="'.esc_attr( "author" ).'">'.esc_html('Author').'</label>
+
+                <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "post-formats" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "post-formats" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','post-formats')).'>
+                <label for="'.esc_attr( "post-formats" ).'">'.esc_html('Post Formats').'</label>
+
 
                 <input type="'.esc_attr( "checkbox" ).'" id="'.esc_attr( "page-attributes" ).'" name="'.esc_attr($this->meta_slug_og.'[supports][]').'" value="'.esc_attr( "page-attributes" ).'" '.esc_attr($this->get_the_saved_value(get_the_ID(),$this->meta_slug_og,'multi_select','supports','page-attributes')).'>
                 <label for="'.esc_attr( "page-attributes" ).'">'.esc_html('Page Attributes').'</label>
