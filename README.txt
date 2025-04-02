@@ -2,8 +2,8 @@
 Contributors: kmfoysal06
 Tags: cpr,custom,post,type,dynamic
 Requires at least: 4.7
-Tested up to: 6.4.2
-Stable tag: 2.2
+Tested up to: 6.7
+Stable tag: 2.5
 Requires PHP: 7.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
