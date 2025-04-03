@@ -1,0 +1,36 @@
+.post-types-container{
+
+}
+.single-post-type {
+    margin: 0 0 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.kmfdcpr-field {
+    margin: 0 0 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+ .kmfdcpr-field::after {
+    display: table;
+    content: "";
+    clear: both;
+}
+
+.kmfdcpr-field .col-25 {
+    width: 25%;
+    display: block;
+    float: left;
+    margin-top: 6px;
+}
+
+.kmfdcpr-field input[type=text] {
+    float: right;
+    width: 100%;
+    margin-top: 6px;
+}
+
