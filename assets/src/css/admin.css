@@ -3,9 +3,12 @@
 }
 .single-post-type {
     margin: 0 0 20px;
-    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+.single-post-type h2 {
+    padding: 0.5rem 0.75rem;
 }
 
 .kmfdcpr-field {
@@ -26,6 +29,12 @@
     display: block;
     float: left;
     margin-top: 6px;
+}
+.kmfdcpr-field.action-field {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: end;
+    column-gap: 0.25rem;
 }
 
 .kmfdcpr-field input[type=text] {
